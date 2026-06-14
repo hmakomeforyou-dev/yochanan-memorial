@@ -16,7 +16,24 @@ Thumbs.db
 *.scratch
 notes-local/
 
+# Project brain + research — internal docs, must NOT be served on GitHub Pages
+CLAUDE.md
+primer.md
+hindsight.md
+RESEARCH.md
+מה-זה.txt
+
 # Unused content (not referenced by storyboard)
 # These are kept locally for film production, NOT for public deploy.
 וידאו/
 assets/audio/*.mp3
+
+# Finished "המקום" amuta videos — kept in the project on disk (OneDrive-backed),
+# not committed (heavy media, not part of the website).
+hamakom-videos/
+
+# Supabase secrets (memorial corner). The migrations/ and functions/ folders ARE in git.
+supabase/.env
+supabase/.env.local
+supabase/.branches/
+supabase/.temp/
