@@ -1,0 +1,24 @@
+# Vercel deploys the ENTIRE repo by default — block anything non-public.
+# (Workspace iron rule: .vercelignore is mandatory for any Vercel-connected project.)
+
+# CI / infra
+.github/
+.gitignore
+
+# Internal docs & project brain (also gitignored, double layer)
+*.md
+CLAUDE.md
+primer.md
+hindsight.md
+RESEARCH.md
+
+# Supabase source (migrations/functions are in git — never serve them)
+supabase/
+
+# Admin surfaces — must never be publicly served (family moderation screen)
+admin-stories.html
+admin*.html
+
+# Production internals
+remotion-memorial/
+storyboard.html
