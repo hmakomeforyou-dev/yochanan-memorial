@@ -42,13 +42,15 @@
   /* ===== overlay texts (stations) ===== */
   .station{
     position:fixed; z-index:3; right:6vw; bottom:12vh; max-width:520px;
-    opacity:0; transform:translateY(24px); transition:opacity .7s, transform .7s;
+    opacity:0; transform:translateY(24px); transition:opacity .7s, transform .7s, bottom .4s ease;
     pointer-events:none;
     background:rgba(20,17,14,.62); backdrop-filter:blur(10px);
     border:1px solid rgba(208,179,135,.35); border-right:3px solid var(--gold);
     border-radius:18px; padding:22px 26px;
     box-shadow:0 10px 40px rgba(0,0,0,.35);
   }
+  /* when the lead banner is open, lift the station card clear of it */
+  body.banner-open .station{bottom:calc(12vh + 150px)}
   .station.show{opacity:1; transform:translateY(0)}
   .station .pill{
     display:inline-block; background:rgba(208,179,135,.18); border:1px solid var(--gold);
@@ -146,15 +148,6 @@
   #leadBanner button[type=submit]:hover{transform:translateY(-1px)}
   #leadBanner .lb-thanks{display:none; color:var(--sun); font-weight:400; font-size:.95rem; padding:6px 0}
 
-  /* ===== skip button ===== */
-  #skip{
-    position:fixed; z-index:5; top:18px; left:18px;
-    background:rgba(28,26,23,.45); border:1px solid rgba(208,179,135,.5); color:var(--cream);
-    font-family:inherit; font-size:.85rem; font-weight:400; padding:8px 20px; border-radius:30px;
-    cursor:pointer; backdrop-filter:blur(8px); text-decoration:none;
-  }
-  #skip:hover{background:rgba(208,179,135,.25)}
-
   /* ===== progress dots ===== */
   #dots{position:fixed; z-index:5; left:18px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px}
   #dots span{width:8px; height:8px; border-radius:50%; background:rgba(243,238,227,.3); transition:background .3s, transform .3s}
@@ -173,8 +166,14 @@
   #loader .pct{font-size:.85rem; color:var(--caramel)}
 
   @media (max-width:640px){
-    .station{right:7vw; left:7vw; bottom:14vh; max-width:none}
+    .station{right:7vw; left:7vw; bottom:13vh; max-width:none}
+    body.banner-open .station{bottom:calc(13vh + 172px)}
     #dots{display:none}
+    /* comfortable tap targets (>=44px) on touch screens */
+    #leadBanner input{padding:13px 14px}
+    #leadBanner button[type=submit]{padding:13px 24px}
+    #endcard .socials a{padding:11px}
+    #endcard .socials{gap:26px}
   }
 
   /* ===== cookie consent ===== */
@@ -189,7 +188,7 @@
   #consent p{font-size:.85rem; font-weight:300; color:var(--cream); line-height:1.5; flex:1; min-width:220px}
   #consent button{
     font-family:inherit; font-size:.85rem; font-weight:700; border-radius:30px;
-    padding:8px 22px; cursor:pointer; border:none;
+    padding:14px 24px; cursor:pointer; border:none;
   }
   #consent .ok{background:var(--gold); color:var(--slate)}
   #consent .min{background:transparent; border:1px solid rgba(208,179,135,.5); color:var(--cream)}
@@ -209,7 +208,6 @@
   <div id="vignette"></div>
 </div>
 
-<a id="skip" href="index.html">דלג לאתר ←</a>
 
 <div id="dots"></div>
 
@@ -249,7 +247,7 @@
   <div class="divider"></div>
   <p>המעבר החד מהלחימה הביתה לא פשוט לאף אחד — לא ללוחם, לא לבת הזוג ולא לילדים. המקום הוא מרחב שקט של עשייה ושיח, שעוזר למשפחות המילואים לעבד את החוויות יחד, להשאיר את המלחמה מאחור ולחזור לשגרה שלמים ובריאים. השותפות שלך בונה את הגשר הזה עבורם.</p>
   <div class="ctas">
-    <a class="gold" href="index.html#join" onclick="track('JoinClick')">אני רוצה להיות שותף</a>
+    <a class="gold" href="#" id="openLeadFormMain" onclick="track('JoinClick')">אני רוצה להיות שותף</a>
     <a class="ghost" href="#" id="openLeadForm" onclick="track('LeadFormOpen')">להשאיר פרטים למייל</a>
   </div>
   <div class="memory">נבנה באהבה ובגעגוע לזכר יוחנן אליהו פרדג' ז"ל, לוחם אגוז.</div>
@@ -333,9 +331,10 @@ function track(event, params){
     // don't stack on top of the cookie-consent bar — wait until it's decided
     if (!force && !localStorage.getItem('cookie_consent_v2')) return;
     banner.classList.add('show');
+    document.body.classList.add('banner-open');
     shownOnce = true;
   }
-  function closeBanner(){ banner.classList.remove('show'); }
+  function closeBanner(){ banner.classList.remove('show'); document.body.classList.remove('banner-open'); }
 
   // trigger: once the user scrolls past the intro (100vh)
   addEventListener('scroll', ()=>{
@@ -347,11 +346,14 @@ function track(event, params){
     closeBanner();
   };
 
-  // endcard secondary CTA re-opens the form even if dismissed
-  document.getElementById('openLeadForm').addEventListener('click', (e)=>{
-    e.preventDefault();
-    openBanner(true);
-    setTimeout(()=> document.getElementById('leadName').focus(), 650);
+  // both endcard CTAs open the lead form (the live conversion path)
+  ['openLeadForm','openLeadFormMain'].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', (e)=>{
+      e.preventDefault();
+      openBanner(true);
+      setTimeout(()=> document.getElementById('leadName').focus(), 650);
+    });
   });
 
   const LEAD_ENDPOINT = 'https://yksnzmuszpdgpqxxthoz.supabase.co/functions/v1/submit-lead';
