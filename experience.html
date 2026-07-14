@@ -49,8 +49,6 @@
     border-radius:18px; padding:22px 26px;
     box-shadow:0 10px 40px rgba(0,0,0,.35);
   }
-  /* when the lead banner is open, lift the station card clear of it */
-  body.banner-open .station{bottom:calc(12vh + 150px)}
   .station.show{opacity:1; transform:translateY(0)}
   .station .pill{
     display:inline-block; background:rgba(208,179,135,.18); border:1px solid var(--gold);
@@ -117,37 +115,6 @@
   }
   #endcard .socials a:hover{color:var(--sun); border-color:var(--gold); transform:translateY(-2px)}
 
-  /* ===== lead banner ===== */
-  #leadBanner{
-    position:fixed; z-index:6; bottom:18px; right:50%; transform:translate(50%, 140%);
-    width:min(520px, calc(100vw - 28px));
-    background:rgba(28,26,23,.88); border:1px solid rgba(208,179,135,.5);
-    border-radius:16px; padding:16px 18px; backdrop-filter:blur(12px);
-    box-shadow:0 10px 40px rgba(0,0,0,.45);
-    transition:transform .6s cubic-bezier(.2,.8,.2,1), opacity .4s;
-    opacity:0; pointer-events:none;
-  }
-  #leadBanner.show{transform:translate(50%, 0); opacity:1; pointer-events:auto}
-  #leadBanner .lb-close{
-    position:absolute; top:8px; left:10px; background:none; border:none; color:var(--sand);
-    font-size:1.1rem; cursor:pointer; padding:4px; line-height:1;
-  }
-  #leadBanner h3{font-size:1.05rem; font-weight:700; color:var(--sun); margin-bottom:10px; padding-left:24px}
-  #leadBanner form{display:flex; gap:8px; flex-wrap:wrap}
-  #leadBanner input{
-    flex:1; min-width:130px; font-family:inherit; font-size:.9rem; font-weight:300;
-    background:rgba(243,238,227,.08); border:1px solid rgba(208,179,135,.35); border-radius:10px;
-    color:var(--cream); padding:10px 14px; outline:none; transition:border-color .2s;
-  }
-  #leadBanner input::placeholder{color:rgba(243,238,227,.45)}
-  #leadBanner input:focus{border-color:var(--gold)}
-  #leadBanner button[type=submit]{
-    font-family:inherit; font-size:.9rem; font-weight:700; border:none; border-radius:10px;
-    background:var(--gold); color:var(--slate); padding:10px 24px; cursor:pointer; transition:transform .15s;
-  }
-  #leadBanner button[type=submit]:hover{transform:translateY(-1px)}
-  #leadBanner .lb-thanks{display:none; color:var(--sun); font-weight:400; font-size:.95rem; padding:6px 0}
-
   /* ===== progress dots ===== */
   #dots{position:fixed; z-index:5; left:18px; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px}
   #dots span{width:8px; height:8px; border-radius:50%; background:rgba(243,238,227,.3); transition:background .3s, transform .3s}
@@ -167,11 +134,8 @@
 
   @media (max-width:640px){
     .station{right:7vw; left:7vw; bottom:13vh; max-width:none}
-    body.banner-open .station{bottom:calc(13vh + 172px)}
     #dots{display:none}
     /* comfortable tap targets (>=44px) on touch screens */
-    #leadBanner input{padding:13px 14px}
-    #leadBanner button[type=submit]{padding:13px 24px}
     #endcard .socials a{padding:11px}
     #endcard .socials{gap:26px}
   }
@@ -192,6 +156,36 @@
   }
   #consent .ok{background:var(--gold); color:var(--slate)}
   #consent .min{background:transparent; border:1px solid rgba(208,179,135,.5); color:var(--cream)}
+
+  /* ===== donate modal ===== */
+  #donateModal{
+    position:fixed; inset:0; z-index:12; display:none;
+    align-items:center; justify-content:center; padding:20px;
+    background:rgba(15,12,10,.72); backdrop-filter:blur(6px);
+  }
+  #donateModal.show{display:flex}
+  #donateModal .box{
+    width:min(400px, 94vw); background:#221f1b;
+    border:1px solid rgba(208,179,135,.45); border-radius:20px; padding:30px 26px 26px;
+    text-align:center; position:relative; box-shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  #donateModal .dm-close{
+    position:absolute; top:12px; left:14px; background:none; border:none; color:var(--sand);
+    font-size:1.3rem; cursor:pointer; line-height:1; padding:4px;
+  }
+  #donateModal h3{font-size:1.35rem; font-weight:900; color:var(--sun); margin-bottom:6px}
+  #donateModal .lead{font-size:.92rem; font-weight:300; color:var(--cream); line-height:1.6; margin-bottom:20px}
+  #donateModal .num{
+    direction:ltr; font-size:1.9rem; font-weight:900; color:#fff; letter-spacing:.04em;
+    background:rgba(243,238,227,.06); border:1px solid rgba(208,179,135,.35); border-radius:14px;
+    padding:16px; margin-bottom:12px; user-select:all;
+  }
+  #donateModal .copy{
+    width:100%; font-family:inherit; font-size:1rem; font-weight:700; border:none; border-radius:12px;
+    background:var(--gold); color:var(--slate); padding:14px; cursor:pointer; transition:background .2s;
+  }
+  #donateModal .copy.ok{background:#4a7a3d; color:#fff}
+  #donateModal .apps{font-size:.82rem; color:var(--caramel); margin-top:14px; line-height:1.6}
 </style>
 </head>
 <body>
@@ -247,8 +241,7 @@
   <div class="divider"></div>
   <p>המעבר החד מהלחימה הביתה לא פשוט לאף אחד — לא ללוחם, לא לבת הזוג ולא לילדים. המקום הוא מרחב שקט של עשייה ושיח, שעוזר למשפחות המילואים לעבד את החוויות יחד, להשאיר את המלחמה מאחור ולחזור לשגרה שלמים ובריאים. השותפות שלך בונה את הגשר הזה עבורם.</p>
   <div class="ctas">
-    <a class="gold" href="#" id="openLeadFormMain" onclick="track('JoinClick')">אני רוצה להיות שותף</a>
-    <a class="ghost" href="#" id="openLeadForm" onclick="track('LeadFormOpen')">להשאיר פרטים למייל</a>
+    <a class="gold" id="donateBtn" href="#" role="button" onclick="track('DonateClick')">לתרומה למען המקום</a>
   </div>
   <div class="memory">נבנה באהבה ובגעגוע לזכר יוחנן אליהו פרדג' ז"ל, לוחם אגוז.</div>
   <div class="socials" aria-label="רשתות חברתיות">
@@ -264,16 +257,15 @@
   </div>
 </div>
 
-<div id="leadBanner" role="dialog" aria-label="השארת פרטים">
-  <button class="lb-close" id="lbClose" aria-label="סגירה">✕</button>
-  <h3>בואו להיות שותפים לעשייה שלנו</h3>
-  <form id="leadForm" novalidate>
-    <input type="text" id="leadName" name="name" placeholder="שם מלא" autocomplete="name" required>
-    <input type="email" id="leadEmail" name="email" placeholder="אימייל" autocomplete="email" dir="rtl" required>
-    <input type="text" id="leadCompany" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;border:0;padding:0">
-    <button type="submit">שליחה</button>
-  </form>
-  <div class="lb-thanks" id="lbThanks">תודה! נהיה בקשר בקרוב 💛</div>
+<div id="donateModal" role="dialog" aria-modal="true" aria-label="תרומה">
+  <div class="box">
+    <button class="dm-close" id="dmClose" aria-label="סגירה">✕</button>
+    <h3>תרומה למען המקום</h3>
+    <p class="lead">שלחו כל סכום ב־<b>ביט</b> או ב־<b>PayBox</b> למספר:</p>
+    <div class="num" id="dmNumber">050-6685023</div>
+    <button class="copy" id="dmCopy">העתקת המספר</button>
+    <p class="apps">כל שקל בונה את המקום 💛<br>לזכר יוחנן אליהו פרדג' ז"ל</p>
+  </div>
 </div>
 
 <div id="consent" role="dialog" aria-label="הסכמת עוגיות">
@@ -318,79 +310,30 @@ function track(event, params){
   };
 })();
 
-/* ============ LEAD BANNER ============ */
+/* ============ DONATE MODAL ============ */
 (function(){
-  const banner = document.getElementById('leadBanner');
-  const form = document.getElementById('leadForm');
-  const thanks = document.getElementById('lbThanks');
-  const KEY = 'hamakom_lead_banner'; // 'dismissed' | 'submitted'
-  let shownOnce = false;
-
-  function openBanner(force){
-    if (!force && localStorage.getItem(KEY)) return;
-    // don't stack on top of the cookie-consent bar — wait until it's decided
-    if (!force && !localStorage.getItem('cookie_consent_v2')) return;
-    banner.classList.add('show');
-    document.body.classList.add('banner-open');
-    shownOnce = true;
-  }
-  function closeBanner(){ banner.classList.remove('show'); document.body.classList.remove('banner-open'); }
-
-  // trigger: once the user scrolls past the intro (100vh)
-  addEventListener('scroll', ()=>{
-    if (!shownOnce && scrollY > innerHeight) openBanner(false);
-  }, {passive:true});
-
-  document.getElementById('lbClose').onclick = ()=>{
-    localStorage.setItem(KEY,'dismissed');
-    closeBanner();
-  };
-
-  // both endcard CTAs open the lead form (the live conversion path)
-  ['openLeadForm','openLeadFormMain'].forEach(id=>{
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('click', (e)=>{
-      e.preventDefault();
-      openBanner(true);
-      setTimeout(()=> document.getElementById('leadName').focus(), 650);
-    });
-  });
-
-  const LEAD_ENDPOINT = 'https://yksnzmuszpdgpqxxthoz.supabase.co/functions/v1/submit-lead';
-  form.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const name = document.getElementById('leadName').value.trim();
-    const email = document.getElementById('leadEmail').value.trim();
-    const company = document.getElementById('leadCompany').value; // honeypot
-    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
-      document.getElementById(!name ? 'leadName' : 'leadEmail').focus();
-      return;
-    }
-    const btn = form.querySelector('button[type=submit]');
-    btn.disabled = true; btn.textContent = 'שולח…';
-    let ok = false;
+  const modal = document.getElementById('donateModal');
+  const DONATE_NUMBER = '0506685023';
+  function open(){ modal.classList.add('show'); }
+  function close(){ modal.classList.remove('show'); }
+  document.getElementById('donateBtn').addEventListener('click', (e)=>{ e.preventDefault(); open(); });
+  document.getElementById('dmClose').addEventListener('click', close);
+  modal.addEventListener('click', (e)=>{ if (e.target === modal) close(); });
+  addEventListener('keydown', (e)=>{ if (e.key === 'Escape') close(); });
+  document.getElementById('dmCopy').addEventListener('click', function(){
+    const btn = this;
+    const done = ()=>{ btn.textContent = '✓ הועתק'; btn.classList.add('ok');
+      setTimeout(()=>{ btn.textContent = 'העתקת המספר'; btn.classList.remove('ok'); }, 1800); };
     try {
-      const res = await fetch(LEAD_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, company, source: 'experience' }),
-      });
-      ok = res.ok;
-    } catch (_) { ok = false; }
-    if (!ok) {
-      // offline fallback — keep locally so nothing is lost
-      const pending = JSON.parse(localStorage.getItem('hamakom_leads_pending') || '[]');
-      pending.push({ name, email, ts: new Date().toISOString(), page: 'experience' });
-      localStorage.setItem('hamakom_leads_pending', JSON.stringify(pending));
-    }
-    if (pixelReady && window.fbq) fbq('track', 'Lead');
-    track('LeadSubmitted');
-    localStorage.setItem(KEY,'submitted');
-    form.style.display = 'none';
-    thanks.style.display = 'block';
-    setTimeout(closeBanner, 2600);
+      const ta = document.createElement('textarea'); ta.value = DONATE_NUMBER;
+      ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta);
+      ta.focus(); ta.select(); const ok = document.execCommand('copy'); document.body.removeChild(ta);
+      if (ok) { done(); track('DonateNumberCopied'); return; }
+    } catch(e){}
+    if (navigator.clipboard) navigator.clipboard.writeText(DONATE_NUMBER).then(()=>{ done(); track('DonateNumberCopied'); });
   });
 })();
+
 </script>
 
 <script>
