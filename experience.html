@@ -272,6 +272,7 @@
   <form id="leadForm" novalidate>
     <input type="text" id="leadName" name="name" placeholder="שם מלא" autocomplete="name" required>
     <input type="email" id="leadEmail" name="email" placeholder="אימייל" autocomplete="email" dir="rtl" required>
+    <input type="text" id="leadCompany" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;border:0;padding:0">
     <button type="submit">שליחה</button>
   </form>
   <div class="lb-thanks" id="lbThanks">תודה! נהיה בקשר בקרוב 💛</div>
@@ -353,19 +354,33 @@ function track(event, params){
     setTimeout(()=> document.getElementById('leadName').focus(), 650);
   });
 
-  form.addEventListener('submit', (e)=>{
+  const LEAD_ENDPOINT = 'https://yksnzmuszpdgpqxxthoz.supabase.co/functions/v1/submit-lead';
+  form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const name = document.getElementById('leadName').value.trim();
     const email = document.getElementById('leadEmail').value.trim();
+    const company = document.getElementById('leadCompany').value; // honeypot
     if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
       document.getElementById(!name ? 'leadName' : 'leadEmail').focus();
       return;
     }
-    // TODO backend: wire to Supabase leads table / email service before launch.
-    // Until then leads are kept locally so nothing is lost during testing.
-    const pending = JSON.parse(localStorage.getItem('hamakom_leads_pending') || '[]');
-    pending.push({ name, email, ts: new Date().toISOString(), page: 'experience' });
-    localStorage.setItem('hamakom_leads_pending', JSON.stringify(pending));
+    const btn = form.querySelector('button[type=submit]');
+    btn.disabled = true; btn.textContent = 'שולח…';
+    let ok = false;
+    try {
+      const res = await fetch(LEAD_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, company, source: 'experience' }),
+      });
+      ok = res.ok;
+    } catch (_) { ok = false; }
+    if (!ok) {
+      // offline fallback — keep locally so nothing is lost
+      const pending = JSON.parse(localStorage.getItem('hamakom_leads_pending') || '[]');
+      pending.push({ name, email, ts: new Date().toISOString(), page: 'experience' });
+      localStorage.setItem('hamakom_leads_pending', JSON.stringify(pending));
+    }
     if (pixelReady && window.fbq) fbq('track', 'Lead');
     track('LeadSubmitted');
     localStorage.setItem(KEY,'submitted');

@@ -22,6 +22,10 @@ primer.md
 hindsight.md
 RESEARCH.md
 מה-זה.txt
+ניצול-מנוי-קלוד.md
+
+# Identity isolation launcher — contains live Supabase access token. NEVER commit.
+start_claude.bat
 
 # Unused content (not referenced by storyboard)
 # These are kept locally for film production, NOT for public deploy.
@@ -37,3 +41,7 @@ supabase/.env
 supabase/.env.local
 supabase/.branches/
 supabase/.temp/
+
+# local admin dashboard + supabase backend files (never publish to Pages)
+admin-leads.html
+supabase/
