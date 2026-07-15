@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>סיור במקום · עמותת המקום</title>
+<meta name="description" content="סיור אינטראקטיבי בבית החוסן שקם בקריית ארבע לזכר יוחנן אליהו פרדג' ז&quot;ל. הסתובבו בתוך המקום וראו איך הוא ייראה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="js/vendor/pannellum/pannellum.css">
+<style>
+:root{
+  --cream:#F3EEE3; --sand:#DCD1BC; --gold:#D0B387; --caramel:#B9926A;
+  --clay:#65544C; --slate:#313139; --sun:#FBE3A8; --bg:#1c1a17;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Heebo',sans-serif;color:var(--cream)}
+#panorama{position:fixed;inset:0}
+.pnlm-container{background:var(--bg) !important}
+.pnlm-load-box{display:none !important}
+.pnlm-ui .pnlm-about-msg{display:none !important}
+
+/* ---------- intro ---------- */
+#intro{position:fixed;inset:0;z-index:60;background:radial-gradient(circle at 50% 30%, #2a2620 0%, var(--bg) 70%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+  transition:opacity .8s ease}
+#intro.hide{opacity:0;pointer-events:none}
+#intro .pill{border:1.5px solid var(--gold);border-radius:999px;padding:8px 26px;font-size:15px;
+  letter-spacing:1px;color:var(--sand);margin-bottom:22px}
+#intro h1{font-size:clamp(34px,7vw,58px);font-weight:800;line-height:1.2}
+#intro h1 g{color:var(--gold);font-style:normal}
+#intro p{margin-top:14px;font-size:clamp(15px,3.5vw,19px);color:var(--sand);max-width:520px;line-height:1.7}
+#intro .hint{margin-top:6px;font-size:14px;color:var(--caramel)}
+#startBtn{margin-top:30px;background:var(--gold);color:var(--slate);border:0;border-radius:999px;
+  padding:16px 52px;font-family:inherit;font-size:19px;font-weight:800;cursor:pointer;
+  box-shadow:0 8px 30px rgba(208,179,135,.35);transition:transform .2s}
+#startBtn:hover{transform:translateY(-2px)}
+#intro .note{margin-top:18px;font-size:12.5px;color:#8a7f74}
+
+/* ---------- scene info card ---------- */
+#infoCard{position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:40;max-width:min(340px,72vw);
+  background:rgba(28,26,23,.78);backdrop-filter:blur(10px);border-right:3px solid var(--gold);
+  border-radius:14px;padding:14px 18px;transition:opacity .5s;opacity:0;pointer-events:none}
+#infoCard.show{opacity:1}
+#infoCard h2{font-size:20px;font-weight:800;color:var(--sun)}
+#infoCard p{font-size:14px;color:var(--sand);line-height:1.65;margin-top:4px}
+#infoCard .badge{display:none;font-size:11.5px;color:var(--caramel);margin-top:8px}
+#infoCard.placeholder .badge{display:block}
+
+/* ---------- station bar ---------- */
+#stations{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  z-index:40;display:flex;gap:6px;background:rgba(28,26,23,.82);backdrop-filter:blur(10px);
+  border:1px solid rgba(208,179,135,.35);border-radius:999px;padding:8px 12px;max-width:96vw;overflow-x:auto;
+  scrollbar-width:none}
+#stations::-webkit-scrollbar{display:none}
+.st{flex:0 0 auto;border:0;background:transparent;color:var(--sand);font-family:inherit;font-size:13px;
+  padding:8px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:all .25s;min-height:36px}
+.st.active{background:var(--gold);color:var(--slate);font-weight:800}
+.st:not(.active):hover{color:var(--sun)}
+
+/* ---------- nav arrows ---------- */
+.navArrow{position:fixed;top:50%;transform:translateY(-50%);z-index:40;width:52px;height:52px;border-radius:50%;
+  border:1.5px solid rgba(208,179,135,.55);background:rgba(28,26,23,.6);backdrop-filter:blur(6px);
+  color:var(--sun);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .25s;font-family:inherit}
+.navArrow:hover{background:rgba(208,179,135,.25)}
+#nextBtn{left:14px}
+#prevBtn{right:14px}
+
+/* ---------- header + donate ---------- */
+#brand{position:fixed;top:calc(14px + env(safe-area-inset-top));left:14px;z-index:40;display:flex;gap:10px;align-items:center}
+#brand .logo{font-size:14px;color:var(--sand);border:1.5px solid rgba(208,179,135,.5);border-radius:999px;
+  padding:7px 16px;background:rgba(28,26,23,.6);backdrop-filter:blur(6px)}
+#donateBtn{border:0;background:var(--gold);color:var(--slate);font-family:inherit;font-weight:800;font-size:14px;
+  border-radius:999px;padding:9px 20px;cursor:pointer;box-shadow:0 4px 18px rgba(208,179,135,.3)}
+
+/* ---------- hotspots ---------- */
+.hs-next{width:46px;height:46px;border-radius:50%;background:rgba(208,179,135,.28);
+  border:2.5px solid var(--gold);cursor:pointer;animation:pulse 2.2s infinite}
+.hs-next::after{content:'';position:absolute;inset:13px;border-radius:50%;background:var(--sun)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(208,179,135,.5)}70%{box-shadow:0 0 0 16px rgba(208,179,135,0)}100%{box-shadow:0 0 0 0 rgba(208,179,135,0)}}
+div.pnlm-tooltip span{font-family:'Heebo',sans-serif;font-size:14px;background:rgba(28,26,23,.9);
+  border-radius:10px;padding:6px 12px}
+
+/* ---------- donate modal ---------- */
+#donateModal{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.65);display:none;
+  align-items:center;justify-content:center;padding:20px}
+#donateModal.open{display:flex}
+#donateModal .box{background:var(--cream);color:var(--slate);border-radius:22px;padding:34px 30px;
+  max-width:400px;width:100%;text-align:center;position:relative}
+#donateModal h3{font-size:24px;font-weight:800}
+#donateModal p{font-size:15px;color:var(--clay);margin-top:8px;line-height:1.6}
+#donateModal .num{direction:ltr;font-size:30px;font-weight:800;letter-spacing:2px;color:var(--slate);
+  background:#fff;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin:18px 0 10px}
+#copyBtn{border:0;background:var(--gold);color:var(--slate);font-family:inherit;font-weight:800;font-size:16px;
+  border-radius:999px;padding:12px 34px;cursor:pointer;margin-top:6px}
+#copyBtn.done{background:#7a9a6d;color:#fff}
+#closeModal{position:absolute;top:12px;left:14px;border:0;background:transparent;font-size:22px;cursor:pointer;color:var(--clay)}
+
+/* ---------- cookie banner ---------- */
+#cookies{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(28,26,23,.96);
+  border-top:1px solid rgba(208,179,135,.4);padding:14px 18px calc(14px + env(safe-area-inset-bottom));
+  display:none;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+#cookies.show{display:flex}
+#cookies p{font-size:13px;color:var(--sand);max-width:560px;line-height:1.5}
+#cookies button{border:0;border-radius:999px;font-family:inherit;font-size:13.5px;padding:9px 20px;cursor:pointer;min-height:38px}
+#acceptAll{background:var(--gold);color:var(--slate);font-weight:800}
+#essentialOnly{background:transparent;color:var(--sand);border:1px solid rgba(208,179,135,.5)}
+
+@media (max-width:640px){
+  #infoCard{top:auto;bottom:calc(72px + env(safe-area-inset-bottom));right:10px;max-width:calc(100vw - 88px)}
+  .navArrow{width:46px;height:46px}
+  #brand .logo{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="panorama"></div>
+
+<div id="intro">
+  <div class="pill">עמותת המקום · קריית ארבע</div>
+  <h1>סיור <g>בתוך המקום</g></h1>
+  <p>כך ייראה בית החוסן שקם בפארק אלון, לזכר יוחנן אליהו פרדג' ז"ל. עברו בין החדרים והסתובבו בתוכם, כמו לעמוד שם באמת.</p>
+  <p class="hint">גררו עם האצבע או העכבר כדי להסתכל סביב. לחצו על העיגולים הזהובים או על שמות החדרים למטה כדי לעבור חדר.</p>
+  <button id="startBtn">כניסה לסיור</button>
+  <div class="note">מבוסס הדמיות תכנון. המקום עצמו נבנה בימים אלה.</div>
+</div>
+
+<div id="brand">
+  <span class="logo">עמותת המקום</span>
+  <button id="donateBtn">לתרומה למען המקום</button>
+</div>
+
+<div id="infoCard"><h2></h2><p></p><span class="badge">הדמיה זמנית. פנורמת 360 מלאה בקרוב.</span></div>
+
+<button class="navArrow" id="prevBtn" aria-label="החדר הקודם">‹</button>
+<button class="navArrow" id="nextBtn" aria-label="החדר הבא">›</button>
+
+<nav id="stations" aria-label="תחנות הסיור"></nav>
+
+<div id="donateModal" role="dialog" aria-modal="true">
+  <div class="box">
+    <button id="closeModal" aria-label="סגירה">✕</button>
+    <h3>לתרומה למען המקום</h3>
+    <p>בביט או PayBox, כל תרומה מניחה לבנה בבית החוסן.</p>
+    <div class="num">050 6685023</div>
+    <button id="copyBtn">העתקת המספר</button>
+  </div>
+</div>
+
+<div id="cookies">
+  <p>האתר משתמש בעוגיות למדידת ביקורים (Meta Pixel) כדי שנדע שהסיפור מגיע לאנשים. אפשר להמשיך גם בלי.</p>
+  <button id="acceptAll">אישור הכול</button>
+  <button id="essentialOnly">חיוני בלבד</button>
+</div>
+
+<script src="js/vendor/pannellum/pannellum.js"></script>
+<script>
+'use strict';
+
+/* ---------- scenes ---------- */
+// placeholder: true = still image shown as partial panorama until the real 360 arrives.
+// When a real equirectangular pano is ready: set placeholder:false, point panorama to the new file,
+// and remove haov/vaov/yaw limits (full 360).
+const SCENES = [
+  { id:'entrance',   title:'שער הכניסה',            text:'הקשת העגולה שמקבלת כל מי שמגיע. כאן מתחילים לנשום.' },
+  { id:'plaza',      title:'הרחבה והבמה',           text:'לב המתחם. מקום למפגשים, לערבים של קהילה ולשקט שבין לבין.' },
+  { id:'workshop',   title:'חדר המלאכה',            text:'נגרות תרפויטית. יש דברים שהידיים יודעות לרפא לפני המילים.' },
+  { id:'greenhouse', title:'החממה',                 text:'עבודה באדמה מחזירה את הגוף לכאן ולעכשיו. לזה קוראים קרקוע.' },
+  { id:'dining',     title:'המטבח הקהילתי',         text:'בישול ואכילה ביחד. חיבור חברתי סביב שולחן אחד.' },
+  { id:'circle',     title:'חדר ההרצאות העגול',     text:'מעגל בלי פינות. מקום לשיחה, ללמידה ולתחושת שייכות.' },
+  { id:'therapy',    title:'חדר הטיפולים השקט',     text:'עיבוד עמוק, אחד על אחד. המשך ישיר לידיים מרפאות.' },
+  { id:'campfire',   title:'הערב במדורה',           text:'היום נגמר סביב האש. לנשום, לפרוק, לשתף.' },
+];
+const FILES = ['pano-01-entrance','pano-02-plaza','pano-03-workshop','pano-04-greenhouse',
+               'pano-05-dining','pano-06-circle','pano-07-therapy','pano-08-campfire'];
+
+const pnScenes = {};
+SCENES.forEach((s, i) => {
+  const next = SCENES[(i + 1) % SCENES.length];
+  pnScenes[s.id] = {
+    type: 'equirectangular',
+    panorama: 'assets/tour/' + FILES[i] + '.webp',
+    haov: 100, vaov: 56, vOffset: 0,          // partial pano (16:9 placeholder)
+    minYaw: -49, maxYaw: 49, minPitch: -26, maxPitch: 26,
+    yaw: 0, pitch: 0, hfov: 80, minHfov: 45, maxHfov: 95,
+    placeholder: true,
+    hotSpots: [{
+      pitch: -4, yaw: 34, cssClass: 'hs-next',
+      createTooltipFunc: hotspotTip, createTooltipArgs: 'אל ' + next.title,
+      clickHandlerFunc: () => go((i + 1) % SCENES.length),
+    }],
+  };
+});
+
+function hotspotTip(hotSpotDiv, text) {
+  const span = document.createElement('span');
+  span.textContent = text;
+  hotSpotDiv.appendChild(span);
+  hotSpotDiv.setAttribute('title', '');
+  span.style.position = 'absolute';
+  span.style.top = '-42px';
+  span.style.right = '50%';
+  span.style.transform = 'translateX(50%)';
+  span.style.whiteSpace = 'nowrap';
+  span.style.color = '#F3EEE3';
+}
+
+let viewer = null;
+let current = 0;
+const visited = new Set();
+
+/* ---------- UI ---------- */
+const stationsEl = document.getElementById('stations');
+SCENES.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'st';
+  b.textContent = s.title;
+  b.addEventListener('click', () => go(i));
+  stationsEl.appendChild(b);
+});
+
+function updateUI() {
+  const s = SCENES[current];
+  document.querySelectorAll('.st').forEach((b, i) => b.classList.toggle('active', i === current));
+  const card = document.getElementById('infoCard');
+  card.classList.remove('show');
+  setTimeout(() => {
+    card.querySelector('h2').textContent = s.title;
+    card.querySelector('p').textContent = s.text;
+    card.classList.toggle('placeholder', !!pnScenes[s.id].placeholder);
+    card.classList.add('show');
+  }, 250);
+  document.querySelectorAll('.st')[current].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+}
+
+function go(i) {
+  if (!viewer || i === current) return;
+  current = i;
+  viewer.loadScene(SCENES[i].id);
+  visited.add(SCENES[i].id);
+  track('TourSceneView', { scene: SCENES[i].id });
+  if (visited.size === SCENES.length) track('Tour3DCompleted', {});
+  updateUI();
+}
+
+document.getElementById('nextBtn').addEventListener('click', () => go((current + 1) % SCENES.length));
+document.getElementById('prevBtn').addEventListener('click', () => go((current - 1 + SCENES.length) % SCENES.length));
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') go((current + 1) % SCENES.length);
+  if (e.key === 'ArrowRight') go((current - 1 + SCENES.length) % SCENES.length);
+});
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  document.getElementById('intro').classList.add('hide');
+  boot();
+});
+
+function boot() {
+  if (viewer) return;
+  viewer = pannellum.viewer('panorama', {
+    default: {
+      firstScene: 'entrance',
+      sceneFadeDuration: 800,
+      autoLoad: true,
+      showControls: false,
+      compass: false,
+      keyboardZoom: false,
+      touchPanSpeedCoeffFactor: 1.2,
+    },
+    scenes: pnScenes,
+  });
+  visited.add('entrance');
+  track('TourSceneView', { scene: 'entrance' });
+  updateUI();
+}
+
+/* ---------- donate ---------- */
+const modal = document.getElementById('donateModal');
+document.getElementById('donateBtn').addEventListener('click', () => {
+  modal.classList.add('open');
+  track('DonateClick', { from: 'tour' });
+});
+document.getElementById('closeModal').addEventListener('click', () => modal.classList.remove('open'));
+modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.remove('open'); });
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const num = '0506685023';
+  const done = () => {
+    const b = document.getElementById('copyBtn');
+    b.textContent = 'הועתק';
+    b.classList.add('done');
+    track('DonateNumberCopied', {});
+    setTimeout(() => { b.textContent = 'העתקת המספר'; b.classList.remove('done'); }, 2500);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(num).then(done).catch(() => legacyCopy(num, done));
+  } else legacyCopy(num, done);
+});
+function legacyCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); cb(); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+/* ---------- consent + pixel ---------- */
+const PIXEL_ID = '2132323570952002';
+let pixelReady = false;
+const pending = [];
+function track(name, data) {
+  if (pixelReady && window.fbq) { window.fbq('trackCustom', name, data || {}); }
+  else pending.push([name, data]);
+}
+function initTracking() {
+  if (pixelReady) return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  window.fbq('init', PIXEL_ID);
+  window.fbq('track', 'PageView');
+  pixelReady = true;
+  pending.splice(0).forEach(([n, d]) => window.fbq('trackCustom', n, d || {}));
+}
+(function consent() {
+  const v = localStorage.getItem('cookie_consent_v2');
+  if (v === 'all') { initTracking(); return; }
+  if (v === 'essential') return;
+  document.getElementById('cookies').classList.add('show');
+  document.getElementById('acceptAll').addEventListener('click', () => {
+    localStorage.setItem('cookie_consent_v2', 'all');
+    document.getElementById('cookies').classList.remove('show');
+    initTracking();
+  });
+  document.getElementById('essentialOnly').addEventListener('click', () => {
+    localStorage.setItem('cookie_consent_v2', 'essential');
+    document.getElementById('cookies').classList.remove('show');
+  });
+})();
+</script>
+</body>
+</html>
