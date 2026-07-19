@@ -1,1175 +1,2179 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>לזכרו של יוחנן אליהו פרדג' ז"ל</title>
-    <meta name="description" content="אתר לזכרו של יוחנן אליהו פרדג' ז״ל — לוחם סיירת אגוז וחטיבת כרמלי, תושב קריית ארבע.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-deep: #f8f9fc;
-            --bg-primary: #ffffff;
-            --bg-section: #f0f4f8;
-            --bg-card: #ffffff;
-            --bg-card-hover: #f5f8fc;
-            --text-primary: #1a2340;
-            --text-secondary: #3d4a6b;
-            --text-muted: #7a8499;
-            --blue: #0038b8;
-            --blue-light: #4a7edb;
-            --blue-dark: #002080;
-            --blue-glow: rgba(0, 56, 184, 0.1);
-            --silver: #c0c8d4;
-            --white-pure: #ffffff;
-            --border: #dce3ed;
-            --border-light: #e8edf5;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Heebo', sans-serif;
-            background: var(--bg-deep);
-            color: var(--text-primary);
-            line-height: 1.8;
-            overflow-x: hidden;
-        }
-
-        /* Israel flag stripe accents */
-        .flag-stripe-top,
-        .flag-stripe-bottom {
-            height: 6px;
-            background: var(--blue);
-        }
-
-        /* ===== NAVIGATION ===== */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 2px 20px rgba(0,56,184,0.05);
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            transition: all 0.3s;
-        }
-
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: color 0.3s;
-            letter-spacing: 0.02em;
-        }
-
-        nav a:hover, nav a.active { color: var(--blue); }
-
-        /* ===== HERO ===== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background:
-                url('https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=1200,q=75/picserver6/crop_images/2026/04/08/H1eDZ11z4211g/H1eDZ11z4211g_1_85_556_313_0_x-large.jpg')
-                center/cover no-repeat;
-            filter: brightness(0.5) saturate(0.7);
-            transform: scale(1.1);
-            transition: transform 0.5s;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(0,20,80,0.4) 0%,
-                rgba(0,20,80,0.55) 50%,
-                rgba(248,249,252,1) 100%
-            );
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 2rem;
-            max-width: 700px;
-        }
-
-        .hero-content h1 {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: clamp(3rem, 7vw, 5.5rem);
-            font-weight: 900;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.5);
-            opacity: 0;
-            animation: fadeUp 1s 0.3s forwards;
-        }
-
-        .hero-content .dates {
-            font-size: 1.3rem;
-            color: rgba(255,255,255,0.85);
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-            opacity: 0;
-            animation: fadeUp 1s 0.5s forwards;
-        }
-
-        .hero-content .tagline {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-            color: rgba(255,255,255,0.95);
-            font-weight: 500;
-            opacity: 0;
-            animation: fadeUp 1s 0.7s forwards;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 24px;
-            height: 40px;
-            border: 2px solid rgba(255,255,255,0.5);
-            border-radius: 12px;
-            opacity: 0;
-            animation: fadeUp 1s 1.2s forwards;
-        }
-
-        .scroll-indicator::after {
-            content: '';
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 8px;
-            background: #ffffff;
-            border-radius: 2px;
-            animation: scrollDot 2s infinite;
-        }
-
-        @keyframes scrollDot {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(16px); }
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== SECTIONS ===== */
-        section {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 6rem 2rem;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s, transform 0.8s;
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section-header {
-            margin-bottom: 3rem;
-        }
-
-        .section-label {
-            font-size: 0.75rem;
-            color: var(--blue);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .section-title {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        /* ===== PHOTO GALLERY ===== */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 3rem 0;
-        }
-
-        .gallery-item {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            aspect-ratio: 4/3;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .gallery-item:first-child {
-            grid-column: span 2;
-            aspect-ratio: 16/9;
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .gallery-item:hover img { transform: scale(1.05); }
-
-        .gallery-item .caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem 1.5rem;
-            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        /* ===== PARALLAX SECTIONS ===== */
-        .parallax-section {
-            position: relative;
-            min-height: 50vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .parallax-bg {
-            position: absolute;
-            inset: -20%;
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center;
-            filter: brightness(0.25) saturate(0.4);
-        }
-
-        .parallax-section::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 32, 128, 0.6);
-            z-index: 1;
-        }
-
-        .parallax-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 4rem 2rem;
-            max-width: 700px;
-        }
-
-        .parallax-content blockquote {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-            color: #ffffff;
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .parallax-content cite {
-            color: var(--blue);
-            font-size: 1rem;
-            font-style: normal;
-        }
-
-        /* ===== INFO STATS ===== */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            box-shadow: 0 2px 12px rgba(0,56,184,0.04);
-        }
-
-        .stat-card:hover {
-            border-color: var(--blue);
-            box-shadow: 0 8px 30px var(--blue-glow);
-        }
-
-        .stat-card .number {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--blue);
-        }
-
-        .stat-card .label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        /* ===== TIMELINE ===== */
-        .timeline {
-            position: relative;
-            padding-right: 3rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            right: 0.5rem;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--blue), var(--border), transparent);
-        }
-
-        .tl-item {
-            position: relative;
-            margin-bottom: 3rem;
-            padding: 1.5rem 2rem;
-            background: var(--bg-card);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: border-color 0.3s, transform 0.3s;
-        }
-
-        .tl-item:hover {
-            border-color: var(--blue-dark);
-            transform: translateX(-4px);
-        }
-
-        .tl-item::before {
-            content: '';
-            position: absolute;
-            right: -3.1rem;
-            top: 1.8rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--blue);
-            box-shadow: 0 0 10px var(--blue-glow);
-        }
-
-        .tl-year {
-            font-size: 0.8rem;
-            color: var(--blue);
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
-        }
-
-        .tl-text {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* ===== BADGES ===== */
-        .badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin: 2rem 0;
-        }
-
-        .badge {
-            padding: 0.6rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text-secondary);
-            transition: all 0.3s;
-        }
-
-        .badge.gold {
-            border-color: var(--blue);
-            color: var(--blue);
-            background: rgba(0, 56, 184, 0.06);
-        }
-
-        /* ===== QUOTE CARDS ===== */
-        .quote-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .quote-card::before {
-            content: '"';
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 8rem;
-            color: var(--blue);
-            opacity: 0.12;
-            line-height: 1;
-        }
-
-        .quote-card p {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 1.4rem;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .quote-card cite {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-style: normal;
-        }
-
-        /* ===== DREAM SECTION ===== */
-        .dream-box {
-            background: linear-gradient(135deg, #ffffff 0%, #eef3fb 100%);
-            border: 2px solid var(--blue);
-            border-radius: 20px;
-            padding: 4rem 3rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 12px 40px rgba(0,56,184,0.08);
-        }
-
-        .dream-box::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0,56,184,0.04), transparent 70%);
-            pointer-events: none;
-        }
-
-        .dream-box h3 {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 2rem;
-            color: var(--blue);
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .dream-box p {
-            color: var(--text-secondary);
-            font-size: 1.15rem;
-            max-width: 550px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        /* ===== NEWS / ARTICLES SECTION ===== */
-        .articles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .article-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .article-card:hover {
-            border-color: var(--blue-dark);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-        }
-
-        .article-card .thumb {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-        }
-
-        .article-card .card-body {
-            padding: 1.5rem;
-        }
-
-        .article-card .source {
-            font-size: 0.75rem;
-            color: var(--blue);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-        }
-
-        .article-card h4 {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 1.05rem;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-        }
-
-        .article-card .excerpt {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* ===== ARTICLE VIEWER (MODAL) ===== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 2000;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .modal-overlay.active { display: flex; }
-
-        .modal-frame {
-            width: 100%;
-            max-width: 900px;
-            height: 85vh;
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .modal-frame iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--blue);
-            border: none;
-            color: #ffffff;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: background 0.2s;
-        }
-
-        .modal-close:hover { background: var(--blue-dark); }
-
-        /* ===== BODY TEXT ===== */
-        .body-text {
-            color: var(--text-secondary);
-            font-size: 1.05rem;
-            margin-bottom: 1.5rem;
-            line-height: 2;
-        }
-
-        .body-text strong { color: var(--text-primary); }
-
-        /* ===== TRAITS LIST ===== */
-        .traits {
-            list-style: none;
-            margin: 2rem 0;
-        }
-
-        .traits li {
-            padding: 1rem 1.5rem;
-            margin-bottom: 0.75rem;
-            background: var(--bg-card);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            transition: border-color 0.3s;
-        }
-
-        .traits li:hover { border-color: var(--blue-dark); }
-
-        .traits li::before {
-            content: '◆';
-            color: var(--blue-dark);
-            margin-left: 0.75rem;
-            font-size: 0.6rem;
-            vertical-align: middle;
-        }
-
-        /* ===== FAMILY ===== */
-        .family-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .family-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .family-card .icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .family-card .name {
-            color: var(--text-primary);
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-
-        .family-card .role {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            margin-top: 0.25rem;
-        }
-
-        /* ===== DIVIDER ===== */
-        .divider {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--blue), transparent);
-            margin: 0 auto;
-        }
-
-        /* Star of David separator */
-        .star-divider {
-            text-align: center;
-            margin: 3rem auto;
-            color: var(--blue);
-            font-size: 1.5rem;
-            opacity: 0.4;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            text-align: center;
-            padding: 6rem 2rem;
-            background: var(--blue-dark);
-            color: #ffffff;
-        }
-
-        footer .memorial {
-            font-family: 'Frank Ruhl Libre', serif;
-            font-size: 3rem;
-            color: var(--blue);
-            margin-bottom: 1rem;
-        }
-
-        footer .sub {
-            color: rgba(255,255,255,0.7);
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        footer .credits {
-            margin-top: 3rem;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.4);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            nav { gap: 1rem; padding: 0.8rem 1rem; }
-            nav a { font-size: 0.75rem; }
-            section { padding: 4rem 1.5rem; }
-            .gallery-item:first-child { grid-column: span 1; }
-            .timeline { padding-right: 2.5rem; }
-            .dream-box { padding: 2.5rem 1.5rem; }
-            .parallax-bg { background-attachment: scroll; }
-        }
-
-        @media (max-width: 480px) {
-            .stats-row { grid-template-columns: 1fr 1fr; }
-            .articles-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>המקום, מרכז חוסן ועשייה לזכר יוחנן אליהו פרדג׳ ז״ל</title>
+  <meta name="description" content="המקום: מרכז חוסן ועשייה לזכר יוחנן אליהו פרדג׳ ז״ל. בית קהילתי בפארק אלון, קריית ארבע, למתמודדים עם פוסט טראומה ולמשפחותיהם. טבע, מלאכה, קהילה ותקווה." />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+  <link rel="canonical" href="https://hmakomeforyou-dev.github.io/yochanan-memorial/" />
+  <meta name="theme-color" content="#F3EEE3" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="he_IL" />
+  <meta property="og:title" content="המקום, מרכז חוסן ועשייה לזכר יוחנן אליהו פרדג׳ ז״ל" />
+  <meta property="og:description" content="בית קהילתי בפארק אלון, קריית ארבע, למתמודדים עם פוסט טראומה ולמשפחותיהם. טבע, מלאכה, קהילה ותקווה." />
+  <meta property="og:url" content="https://hmakomeforyou-dev.github.io/yochanan-memorial/" />
+  <meta property="og:image" content="https://hmakomeforyou-dev.github.io/yochanan-memorial/assets/img/og-hamakom-1200x630.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preload" as="image" href="assets/img/hero-aerial-1600.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --cream: #F3EEE3;
+      --sand: #DCD1BC;
+      --honey: #D8C29B;
+      --gold: #D0B387;
+      --caramel: #B9926A;
+      --clay: #65544C;
+      --slate: #313139;
+      --white: #FFFFFF;
+      --sun-core: #FBE3A8;
+      --sun-warm: #F0C97A;
+
+      --sky: linear-gradient(180deg,
+        #cfd6d6 0%,
+        #e7e0d2 22%,
+        #ecdcbd 45%,
+        #e3c890 62%,
+        #d8b277 78%,
+        #b9926a 100%);
+
+      --font: 'Heebo', sans-serif;
+      --nav-h: 68px;
+    }
+
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font);
+      background: var(--cream);
+      color: var(--slate);
+      direction: rtl;
+      text-align: right;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── FOCUS ─── */
+    :focus-visible {
+      outline: 3px solid var(--caramel);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 13px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, opacity .2s;
+      border: 2px solid transparent;
+      letter-spacing: .02em;
+      text-decoration: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--slate);
+      box-shadow: 0 4px 18px rgba(208,179,135,.45);
+    }
+    .btn-primary:hover { box-shadow: 0 8px 28px rgba(208,179,135,.6); }
+
+    .btn-ghost-light {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,.7);
+    }
+    .btn-ghost-light:hover {
+      background: rgba(255,255,255,.12);
+    }
+
+    .btn-ghost-dark {
+      background: transparent;
+      color: var(--slate);
+      border-color: var(--slate);
+    }
+    .btn-ghost-dark:hover { background: rgba(49,49,57,.06); }
+
+    .btn-sm { font-size: .875rem; padding: 8px 20px; }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      padding: 0 clamp(16px, 5vw, 64px);
+      transition: background .35s, backdrop-filter .35s, box-shadow .35s;
+    }
+    .nav.scrolled {
+      background: rgba(243,238,227,.92);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(185,146,106,.25);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .nav-logo { line-height: 1.1; }
+    .nav-logo-main {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--slate);
+      letter-spacing: .04em;
+    }
+    .nav-logo-sub {
+      font-size: .7rem;
+      font-weight: 300;
+      color: var(--clay);
+      letter-spacing: .06em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--slate);
+      opacity: .8;
+      transition: opacity .2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+    .nav-cta { margin-inline-start: 8px; }
+
+    /* mobile nav toggle */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .nav-burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--slate);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-block-start: var(--nav-h);
+    }
+    .hero-sky {
+      position: absolute;
+      inset: 0;
+      background: var(--sky);
+      z-index: 0;
+    }
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 62%;
+      z-index: 0;
+      opacity: .85;
+    }
+    .hero-scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(180deg,
+        rgba(49,49,57,.30) 0%,
+        rgba(49,49,57,.12) 35%,
+        rgba(101,84,76,.18) 70%,
+        rgba(49,49,57,.55) 100%);
+    }
+
+    /* sun glow */
+    .hero-sun {
+      position: absolute;
+      bottom: 22%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(340px, 70vw);
+      height: min(340px, 70vw);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .hero-sun-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 60%,
+        var(--sun-core) 0%,
+        var(--sun-warm) 25%,
+        rgba(240,201,122,.45) 55%,
+        transparent 78%);
+      filter: blur(4px);
+    }
+
+    /* silhouettes horizon band */
+    .hero-silhouettes {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* hero content */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 clamp(20px, 6vw, 80px);
+      max-width: 760px;
+    }
+    .hero-eyebrow {
+      font-size: clamp(.7rem, 1.8vw, .9rem);
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--sun-core);
+      margin-bottom: 18px;
+      opacity: .95;
+      text-shadow: 0 1px 12px rgba(49,49,57,.5);
+    }
+    .hero-h1 {
+      font-size: clamp(3.4rem, 10vw, 7.5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: .02em;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 34px rgba(49,49,57,.55);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.75;
+      margin-bottom: 40px;
+      max-width: 560px;
+      margin-inline: auto;
+      text-shadow: 0 2px 16px rgba(49,49,57,.55);
+    }
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: clamp(90px, 14%, 130px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: .55;
+      animation: scrollBob 2.4s ease-in-out infinite;
+    }
+    .hero-scroll span {
+      font-size: .7rem;
+      font-weight: 400;
+      letter-spacing: .14em;
+      color: var(--cream);
+      text-shadow: 0 1px 8px rgba(49,49,57,.6);
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, var(--cream), transparent);
+    }
+    @keyframes scrollBob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section {
+      padding: clamp(64px, 10vw, 120px) clamp(20px, 6vw, 80px);
+    }
+    .section-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.9rem, 4.5vw, 3rem);
+      font-weight: 900;
+      color: var(--slate);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .section-lead {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      font-weight: 300;
+      color: var(--clay);
+      line-height: 1.8;
+      max-width: 640px;
+    }
+
+    /* ─── STORY ─── */
+    .story-bg { background: var(--cream); }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 80px);
+      align-items: center;
+      margin-top: 48px;
+    }
+    .story-portrait {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .portrait-ring {
+      width: clamp(200px, 35vw, 320px);
+      height: clamp(200px, 35vw, 320px);
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--honey), var(--sand));
+      box-shadow: 0 8px 48px rgba(185,146,106,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      border: 4px solid var(--gold);
+      overflow: hidden;
+    }
+    .portrait-label {
+      font-size: .75rem;
+      font-weight: 400;
+      color: var(--clay);
+      letter-spacing: .1em;
+      opacity: .7;
+    }
+    .portrait-icon {
+      opacity: .35;
+    }
+    .story-body {}
+    .story-body .section-lead { margin-bottom: 0; }
+    .story-quote {
+      margin-top: 32px;
+      padding: 20px 24px;
+      border-inline-start: 4px solid var(--gold);
+      background: linear-gradient(90deg, rgba(208,179,135,.12), transparent);
+      border-radius: 0 8px 8px 0;
+    }
+    .story-quote p {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--clay);
+      line-height: 1.65;
+      font-style: italic;
+    }
+    .story-name {
+      margin-top: 10px;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--caramel);
+      letter-spacing: .08em;
+    }
+
+    /* ─── VISION ─── */
+    .vision-bg { background: var(--sand); }
+    .vision-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 36px 28px;
+      box-shadow: 0 2px 24px rgba(101,84,76,.08);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 40px rgba(101,84,76,.15);
+    }
+    .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--honey), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 10px;
+    }
+    .card-body {
+      font-size: .925rem;
+      font-weight: 300;
+      color: var(--clay);
+      line-height: 1.75;
+    }
+    .vision-pullquote {
+      margin-top: 56px;
+      text-align: center;
+      position: relative;
+      padding: 40px 20px;
+    }
+    .vision-pullquote::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(208,179,135,.18), transparent);
+      border-radius: 16px;
+    }
+    .pullquote-text {
+      position: relative;
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--slate);
+      line-height: 1.4;
+      font-style: italic;
+    }
+    .pullquote-text .mark {
+      color: var(--caramel);
+    }
+
+    /* ─── MEMORY CORNER ─── */
+    .memory-bg { background: var(--cream); }
+    .memory-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 80px);
+      align-items: center;
+      margin-top: 48px;
+    }
+    .memory-text .section-lead { margin-bottom: 28px; }
+    .memory-form-mock {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 32px rgba(101,84,76,.1);
+      border: 1px solid rgba(208,179,135,.3);
+    }
+    .form-label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--clay);
+      letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      border: 1.5px solid var(--sand);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-family: var(--font);
+      font-size: .9rem;
+      color: var(--slate);
+      background: var(--cream);
+      margin-bottom: 16px;
+      transition: border-color .2s, box-shadow .2s;
+      direction: rtl;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(208,179,135,.2);
+    }
+    .form-textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+    .form-note {
+      font-size: .75rem;
+      color: var(--clay);
+      opacity: .65;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* ─── JOIN (closing sky band) ─── */
+    .join-section {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(80px, 14vw, 140px) clamp(20px, 6vw, 80px);
+      text-align: center;
+    }
+    .join-sky {
+      position: absolute;
+      inset: 0;
+      background: var(--sky);
+      z-index: 0;
+    }
+    .join-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .join-section .section-label { color: rgba(255,255,255,.7); }
+    .join-section .section-title { color: var(--white); text-align: center; }
+    .join-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.8);
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+    .join-ctas {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+    .join-contact {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .contact-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      color: rgba(255,255,255,.55);
+      text-transform: uppercase;
+    }
+    .contact-value {
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--white);
+    }
+    .join-silhouettes {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .join-sun {
+      position: absolute;
+      bottom: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(420px, 80vw);
+      height: min(420px, 80vw);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .join-sun-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 65%,
+        var(--sun-core) 0%,
+        var(--sun-warm) 22%,
+        rgba(240,201,122,.35) 50%,
+        transparent 75%);
+      filter: blur(6px);
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      background: var(--slate);
+      color: rgba(255,255,255,.55);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: .8rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .footer strong { color: rgba(255,255,255,.8); font-weight: 700; }
+    .footer-sep { margin: 0 10px; opacity: .35; }
+    .footer-credit { margin-top: 4px; font-size: .7rem; opacity: .5; }
+
+    /* ─── DIVIDER ─── */
+    .warm-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto;
+      max-width: 480px;
+      opacity: .55;
+    }
+
+    /* ─── PHOTO PLACEHOLDER ─── */
+    .photo-placeholder {
+      background: linear-gradient(135deg, var(--honey), var(--sand));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--clay);
+      letter-spacing: .12em;
+      opacity: .6;
+    }
+
+    /* ─── NEED ─── */
+    .need-bg { background: var(--cream); }
+    .need-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .need-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px 26px;
+      box-shadow: 0 2px 24px rgba(101,84,76,.08);
+      border-top: 4px solid var(--caramel);
+    }
+    .need-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 10px;
+    }
+    .need-card p {
+      font-size: .925rem;
+      font-weight: 300;
+      color: var(--clay);
+      line-height: 1.75;
+    }
+
+    /* ─── ENVELOPE MODEL ─── */
+    .envelope-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(32px, 6vw, 72px);
+      align-items: center;
+      margin-top: 56px;
+    }
+    .envelope-rings {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .envelope-legend { display: flex; flex-direction: column; gap: 20px; }
+    .legend-item { display: flex; gap: 14px; align-items: flex-start; }
+    .legend-dot {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      margin-top: 4px;
+      box-shadow: 0 1px 4px rgba(101,84,76,.2);
+    }
+    .legend-item h4 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 3px;
+    }
+    .legend-item p {
+      font-size: .9rem;
+      font-weight: 300;
+      color: var(--clay);
+      line-height: 1.65;
+    }
+
+    /* ─── JOURNEY ─── */
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 52px;
+      counter-reset: step;
+    }
+    .journey-step {
+      position: relative;
+      background: var(--cream);
+      border-radius: 14px;
+      padding: 28px 22px 24px;
+      text-align: center;
+    }
+    .journey-step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--honey), var(--gold));
+      color: var(--slate);
+      font-weight: 900;
+      font-size: 1.2rem;
+    }
+    .journey-step h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 8px;
+    }
+    .journey-step p {
+      font-size: .85rem;
+      font-weight: 300;
+      color: var(--clay);
+      line-height: 1.6;
+    }
+
+    /* ─── SPACE / ENERGY AXIS ─── */
+    .space-bg { background: var(--cream); }
+    .space-axis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 16px;
+    }
+    .space-arrow {
+      height: 6px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--clay), var(--caramel), var(--gold), var(--sun-warm));
+      margin: 48px 0 8px;
+      opacity: .8;
+    }
+    .zone {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 30px 26px;
+      box-shadow: 0 2px 24px rgba(101,84,76,.08);
+    }
+    .zone-tag {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 8px;
+    }
+    .zone h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 10px;
+    }
+    .zone p {
+      font-size: .9rem;
+      font-weight: 300;
+      color: var(--clay);
+      line-height: 1.7;
+    }
+    .space-loc {
+      margin-top: 40px;
+      text-align: center;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--clay);
+    }
+    .space-loc strong { color: var(--slate); font-weight: 700; }
+
+    /* ─── PARTNER STRIP ─── */
+    .partner-strip {
+      background: var(--slate);
+      padding: clamp(40px, 7vw, 64px) clamp(20px, 6vw, 80px);
+      text-align: center;
+    }
+    .partner-inner { max-width: 720px; margin: 0 auto; }
+    .partner-strip .section-label { color: var(--gold); }
+    .partner-strip h3 {
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+    .partner-strip p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.78);
+      line-height: 1.75;
+    }
+
+    /* ─── SUPPORT PILLARS ─── */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 44px;
+      text-align: right;
+    }
+    .pillar {
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 14px;
+      padding: 24px 22px;
+    }
+    .pillar h4 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .pillar p {
+      font-size: .86rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.78);
+      line-height: 1.65;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 860px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-burger { display: flex; }
+      .nav-mobile-open .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: var(--nav-h);
+        inset-inline: 0;
+        background: rgba(243,238,227,.97);
+        backdrop-filter: blur(14px);
+        padding: 20px 28px 28px;
+        border-bottom: 1px solid rgba(208,179,135,.3);
+        gap: 20px;
+        align-items: flex-end;
+      }
+      .nav-mobile-open .nav-cta { display: flex; align-self: flex-end; }
+
+      .story-grid, .memory-grid { grid-template-columns: 1fr; }
+      .story-portrait { order: -1; }
+      .portrait-ring { width: 180px; height: 180px; }
+
+      .vision-cards { grid-template-columns: 1fr; }
+      .need-cards { grid-template-columns: 1fr; }
+      .envelope-grid { grid-template-columns: 1fr; }
+      .envelope-rings { order: -1; }
+      .journey { grid-template-columns: 1fr 1fr; }
+      .space-axis { grid-template-columns: 1fr; }
+      .space-arrow { display: none; }
+      .pillars { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .journey { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .join-ctas { flex-direction: column; align-items: center; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Flag stripe top -->
-    <div class="flag-stripe-top"></div>
+  <script>
+    (function () {
+      var moved = { intro: 1, character: 1, dream: 1, media: 1, zikaron: 1, 'zikaron-stories': 1 };
+      var h = location.hash.replace('#', '');
+      if (moved[h]) location.replace('memorial.html#' + h);
+    })();
+  </script>
 
-    <!-- Navigation -->
-    <nav>
-        <a href="#hero">בית</a>
-        <a href="#about">הסיפור</a>
-        <a href="#service">שירות</a>
-        <a href="#timeline">ציר זמן</a>
-        <a href="#character">האדם</a>
-        <a href="#dream">החלום</a>
-        <a href="#media">בתקשורת</a>
-    </nav>
+  <!-- ══════════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════════ -->
+  <header>
+    <nav class="nav" id="main-nav" role="navigation" aria-label="ניווט ראשי">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo" aria-label="המקום, דף הבית">
+          <div class="nav-logo-main">המקום</div>
+          <div class="nav-logo-sub">מרכז חוסן ועשייה</div>
+        </a>
 
-    <!-- Hero -->
-    <header class="hero" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>יוחנן אליהו פרדג' ז"ל</h1>
-            <p class="dates">1988 — 2026</p>
-            <p class="tagline">לוחם שנשא על כתפיו את עמו עד אשר כשלו כוחותיו</p>
-        </div>
-        <div class="scroll-indicator"></div>
-    </header>
+        <button class="nav-burger" id="burger" aria-label="פתח תפריט" aria-expanded="false" aria-controls="nav-menu">
+          <span></span><span></span><span></span>
+        </button>
 
-    <!-- Stats -->
-    <section id="stats">
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="number">38</div>
-                <div class="label">שנות חיים</div>
-            </div>
-            <div class="stat-card">
-                <div class="number">~20</div>
-                <div class="label">שנות שירות</div>
-            </div>
-            <div class="stat-card">
-                <div class="number">3</div>
-                <div class="label">מבצעים</div>
-            </div>
-            <div class="stat-card">
-                <div class="number">3</div>
-                <div class="label">ילדים</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Photo Gallery -->
-    <section id="gallery">
-        <div class="section-header">
-            <div class="section-label">תמונות</div>
-            <h2 class="section-title">רגעים מחיים של גבורה</h2>
-        </div>
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=1200,q=75/picserver6/crop_images/2026/04/08/H1eDZ11z4211g/H1eDZ11z4211g_1_85_556_313_0_x-large.jpg" alt="יוחנן אליהו פרדג' ז״ל">
-                <div class="caption">יוחנן אליהו פרדג' ז"ל</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=740,q=75/picserver6/crop_images/2026/04/08/rJ11vbbGEhZg/rJ11vbbGEhZg_0_110_663_704_0_x-large.jpg" alt="איש של חיבורים שמאחד אנשים">
-                <div class="caption">איש של חיבורים שמאחד אנשים</div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=740,q=75/picserver6/crop_images/2026/04/08/SJwbZGNnZl/SJwbZGNnZl_0_447_702_592_0_x-large.jpg" alt="רצף של טראומות ואירועים ביטחוניים">
-                <div class="caption">רצף של טראומות ואירועים ביטחוניים</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quote Parallax -->
-    <div class="parallax-section">
-        <div class="parallax-bg" style="background-image: url('https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=1200,q=50/picserver6/crop_images/2026/04/08/rJ11vbbGEhZg/rJ11vbbGEhZg_0_110_663_704_0_x-large.jpg');"></div>
-        <div class="hero-overlay"></div>
-        <div class="parallax-content">
-            <blockquote>"נתן הכול לכולם... קודם כל אחרים ורק אחר כך אני"</blockquote>
-            <cite>— משה פרדג', אביו</cite>
-        </div>
-    </div>
-
-    <!-- About -->
-    <section id="about">
-        <div class="section-header">
-            <div class="section-label">הסיפור</div>
-            <h2 class="section-title">מי היה יוחנן</h2>
-        </div>
-
-        <p class="body-text">
-            יוחנן אליהו פרדג' היה <strong>תושב קריית ארבע</strong>, בן 38, נשוי לנעמה ואבא לאורי, גלעד ונדב.
-            בכור לשבעה אחים — מתוכם לפחות חמישה לוחמים בצה"ל.
-        </p>
-
-        <p class="body-text">
-            יוחנן שירת את מרבית חייו הבוגרים במערך הלחימה של צה"ל. מסלולו הצבאי החל
-            <strong>בסיירת אגוז</strong> ונמשך בשורת מבצעים ותפקידים — עד יומו האחרון.
-        </p>
-
-        <p class="body-text">
-            הוא לא רק לחם — הוא דאג. דאג ללוחמים אחרים, למפקדים, לפוסט-טראומטיים
-            שטרם הוכרו. נסע ממקום למקום לגייס כספים לטיפול בחברים שנשברו.
-            שמר ציוד חירום בביתו, מוכן תמיד לקריאה — לעיתים עד לתוך חברון עצמה.
-        </p>
-
-        <div class="family-grid">
-            <div class="family-card">
-                <div class="icon">💑</div>
-                <div class="name">נעמה</div>
-                <div class="role">אשתו</div>
-            </div>
-            <div class="family-card">
-                <div class="icon">👦</div>
-                <div class="name">אורי</div>
-                <div class="role">בנו הבכור</div>
-            </div>
-            <div class="family-card">
-                <div class="icon">👦</div>
-                <div class="name">גלעד</div>
-                <div class="role">בנו</div>
-            </div>
-            <div class="family-card">
-                <div class="icon">👦</div>
-                <div class="name">נדב</div>
-                <div class="role">בנו</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Military Service -->
-    <section id="service">
-        <div class="section-header">
-            <div class="section-label">שירות צבאי</div>
-            <h2 class="section-title">חיים של לחימה</h2>
-        </div>
-
-        <p class="body-text">
-            יוחנן לחם בכל מלחמה שארצו ניהלה מאז שהתגייס. לא ביקש שום דבר בתמורה.
-            כשפרצה מלחמת חרבות ברזל — פנה לחבר קצין בחטיבת כרמלי ונאבק להתגייס
-            מחדש כסגן מפקד פלוגה.
-        </p>
-
-        <div class="badges">
-            <span class="badge gold">סיירת אגוז</span>
-            <span class="badge gold">חטיבת כרמלי</span>
-            <span class="badge">יחידת התערבות ביו"ש</span>
-            <span class="badge">צוות לוט"ר ישובי</span>
-            <span class="badge">רבש"ץ קריית ארבע</span>
-            <span class="badge">חפ"ק מג"ד</span>
-        </div>
-
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="number" style="font-size:1.3rem;">עופרת יצוקה</div>
-                <div class="label">2008-2009</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" style="font-size:1.3rem;">צוק איתן</div>
-                <div class="label">2014</div>
-            </div>
-            <div class="stat-card">
-                <div class="number" style="font-size:1.3rem;">חרבות ברזל</div>
-                <div class="label">2023-2026</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quote Parallax 2 -->
-    <div class="parallax-section">
-        <div class="parallax-bg" style="background-image: url('https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=1200,q=50/picserver6/crop_images/2026/04/08/SJwbZGNnZl/SJwbZGNnZl_0_447_702_592_0_x-large.jpg');"></div>
-        <div class="hero-overlay"></div>
-        <div class="parallax-content">
-            <blockquote>"תקשיב, אני כבר חנוק"</blockquote>
-            <cite>— יוחנן, לאחיו, בתקופה האחרונה</cite>
-        </div>
-    </div>
-
-    <!-- Timeline -->
-    <section id="timeline">
-        <div class="section-header">
-            <div class="section-label">ציר זמן</div>
-            <h2 class="section-title">מסלול חיים</h2>
-        </div>
-
-        <div class="timeline">
-            <div class="tl-item">
-                <div class="tl-year">2002</div>
-                <div class="tl-text">אביו משה נפצע אנוש בקרב סמטת הגבורה — הפיגוע בציר המתפללים בחברון. בקרב נהרגו 12 ישראלים, בהם אל"מ דרור וינברג.</div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-year">~2006</div>
-                <div class="tl-text">מתגייס לסיירת אגוז. תחילת מסלול לחימה שיימשך כל חייו הבוגרים.</div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-year">2008-2009</div>
-                <div class="tl-text">משתתף במבצע עופרת יצוקה בעזה.</div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-year">2014</div>
-                <div class="tl-text">מבצע צוק איתן. חווה אירוע טראומטי בצוות. משוחרר מהמילואים.</div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-year">לאחר השחרור</div>
-                <div class="tl-text">נפצע בפיגוע אבנים. עובד תקופה במשרד הביטחון. מחליט לשמש כרבש"ץ בקריית ארבע — תפקיד שמילא תחת לחץ עצום: פיגועים, חדירות, אירועי אבטחה. במקביל מתנדב בצוות לוט"ר ישובי.</div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-year">7 באוקטובר 2023</div>
-                <div class="tl-text">מתעקש לחזור ללחימה. מתגייס מחדש לחטיבת כרמלי כסגן מפקד פלוגה.</div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-year">2023-2026</div>
-                <div class="tl-text">חודשים ארוכים של לחימה רצופה: עזה, הצפון, לבנון. במקביל — עוזר ללוחמים נפגעי נפש, מגייס כסף לטיפולים.</div>
-            </div>
-            <div class="tl-item">
-                <div class="tl-year">אפריל 2026</div>
-                <div class="tl-text">יוחנן אליהו פרדג' הלך לעולמו. בן 38. השאיר אחריו אישה, שלושה ילדים, ומשפחה שלמה של לוחמים וחברים.</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Character -->
-    <section id="character">
-        <div class="section-header">
-            <div class="section-label">עדויות</div>
-            <h2 class="section-title">האדם מאחורי הלוחם</h2>
-        </div>
-
-        <div class="quote-card">
-            <p>"יוחנן נתן הכול לאחרים עד שנפשו נשברה"</p>
-            <cite>— משה פרדג', אביו</cite>
-        </div>
-
-        <ul class="traits">
-            <li>דאג באופן אישי ללוחמים ולמפקדים — לא רק בקרב, גם אחריו</li>
-            <li>עסק בעזרה לפוסט-טראומטיים שטרם הוכרו רשמית</li>
-            <li>נסע ממקום למקום לגייס כסף עבור טיפול בלוחמים נפגעי נפש</li>
-            <li>שמר ציוד חירום בביתו — מוכן תמיד לכל קריאה, לעיתים בתוך חברון</li>
-            <li>הסתיר את הכאב — "הכול בסדר", "קשה אבל אני מסתדר"</li>
+        <ul class="nav-links" id="nav-menu" role="list">
+          <li><a href="#hero">המקום</a></li>
+          <li><a href="#vision">החזון</a></li>
+          <li><a href="#space">המרחב</a></li>
+          <li><a href="#who">מי היה יוחנן</a></li>
+          <li><a href="#gallery">רגעים</a></li>
+          <li><a href="experience.html" data-track="ExperienceClick">סיור חי</a></li>
+          <li><a href="tour.html" data-track="TourClick">סיור 360</a></li>
+          <li><a href="memorial.html">לזכרו</a></li>
+          <li><a href="#join" data-track="JoinClick">להצטרף</a></li>
         </ul>
+        <a href="#" data-donate class="btn btn-primary btn-sm nav-cta">לתרומה</a>
+      </div>
+    </nav>
+  </header>
 
-        <div class="quote-card">
-            <p>"יוחנן היה חלק ממשפחת אגוז — לוחם, חבר ואדם אהוב שהשאיר חותם על כל מי שפגש בו"</p>
-            <cite>— הודעת עמותת בוגרי אגוז</cite>
-        </div>
+  <main>
 
-        <p class="body-text">
-            חברים מספרים שלא היו מאמינים שדווקא הוא — שתמיד היה החזק, תמיד נתן,
-            תמיד עזר — הוא זה שייפול. כי הוא לא סיפר. כי הוא לא ביקש.
+    <!-- ══════════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════════ -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero-sky" aria-hidden="true"></div>
+      <img class="hero-photo"
+           src="assets/img/hero-aerial-1600.webp"
+           srcset="assets/img/hero-aerial-800.webp 800w, assets/img/hero-aerial-1600.webp 1600w"
+           sizes="100vw"
+           fetchpriority="high"
+           alt="הדמיית המקום בשעת שקיעה, מבט אווירי על פארק אלון" />
+      <div class="hero-scrim" aria-hidden="true"></div>
+
+      <!-- Sun -->
+      <div class="hero-sun" aria-hidden="true">
+        <div class="hero-sun-glow"></div>
+      </div>
+
+      <!-- Hero content -->
+      <div class="hero-content">
+        <p class="hero-eyebrow">מרכז חוסן ועשייה · לזכר יוחנן אליהו פרדג׳ ז״ל</p>
+        <h1 class="hero-h1" id="hero-title">הַמָּקוֹם</h1>
+        <p class="hero-sub">
+          בית קהילתי למתמודדים עם פוסט טראומה ולבני זוגם.<br />
+          ממשיכים את החלום של יוחנן.
         </p>
+        <div class="hero-ctas">
+          <a href="#join" class="btn btn-primary" data-track="JoinClick">להצטרף לחזון</a>
+          <a href="experience.html" class="btn btn-ghost-light" data-track="ExperienceClick">לסיור חי במקום</a>
+        </div>
+      </div>
+
+      <!-- Scroll cue -->
+      <div class="hero-scroll" aria-hidden="true">
+        <span>גלול</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+
+      <!-- Silhouette horizon -->
+      <svg class="hero-silhouettes"
+           viewBox="0 0 1440 160"
+           preserveAspectRatio="xMidYMax meet"
+           xmlns="http://www.w3.org/2000/svg"
+           aria-hidden="true"
+           focusable="false">
+        <!-- Ground -->
+        <rect x="0" y="120" width="1440" height="40" fill="#313139"/>
+        <!-- Silhouette group – centered, diverse heights, adult+child held hand -->
+        <g fill="#313139" transform="translate(580,0)">
+          <!-- Person 1 – tall adult, arms slightly open -->
+          <ellipse cx="40" cy="28" rx="9" ry="9"/>
+          <path d="M40 37 Q34 55 30 75 L34 75 Q36 60 40 50 Q44 60 46 75 L50 75 Q46 55 40 37Z"/>
+          <path d="M30 50 Q20 58 18 65 L21 67 Q24 60 32 54Z"/>
+          <path d="M50 50 Q60 58 62 65 L59 67 Q56 60 48 54Z"/>
+
+          <!-- Person 2 – medium adult -->
+          <ellipse cx="80" cy="33" rx="8" ry="8"/>
+          <path d="M80 41 Q75 57 72 75 L76 75 Q77 62 80 52 Q83 62 84 75 L88 75 Q85 57 80 41Z"/>
+          <path d="M72 56 Q64 62 62 68 L65 70 Q67 64 74 60Z"/>
+          <path d="M88 56 Q96 62 98 68 L95 70 Q93 64 86 60Z"/>
+
+          <!-- Person 3 – adult with child (holding hands) -->
+          <ellipse cx="120" cy="30" rx="8.5" ry="8.5"/>
+          <path d="M120 39 Q115 55 112 75 L116 75 Q118 61 120 51 Q122 61 124 75 L128 75 Q125 55 120 39Z"/>
+          <!-- arm toward child -->
+          <path d="M112 54 Q108 58 106 63 L109 64 Q111 60 115 57Z"/>
+          <!-- other arm open -->
+          <path d="M128 54 Q136 60 139 66 L136 67 Q134 62 126 58Z"/>
+
+          <!-- Child – shorter, rounder -->
+          <ellipse cx="150" cy="48" rx="6.5" ry="6.5"/>
+          <path d="M150 54.5 Q146 64 144 75 L148 75 Q149 66 150 59 Q151 66 152 75 L156 75 Q154 64 150 54.5Z"/>
+          <!-- child arm toward adult -->
+          <path d="M144 62 Q138 63 136 65 L138 67 Q140 65 146 63Z"/>
+          <!-- child other arm up -->
+          <path d="M156 62 Q160 58 162 56 L160 54 Q158 57 154 60Z"/>
+
+          <!-- Person 4 – on the other side, looking -->
+          <ellipse cx="-40" cy="35" rx="7.5" ry="7.5"/>
+          <path d="M-40 42.5 Q-44 57 -47 75 L-43 75 Q-42 62 -40 52 Q-38 62 -37 75 L-33 75 Q-36 57 -40 42.5Z"/>
+          <path d="M-47 57 Q-54 63 -56 69 L-53 70 Q-51 65 -45 61Z"/>
+          <path d="M-33 57 Q-26 61 -24 67 L-27 68 Q-29 63 -35 59Z"/>
+
+          <!-- Person 5 – further left, slightly shorter -->
+          <ellipse cx="-80" cy="38" rx="7" ry="7"/>
+          <path d="M-80 45 Q-84 59 -87 75 L-83 75 Q-82 62 -80 53 Q-78 62 -77 75 L-73 75 Q-76 59 -80 45Z"/>
+          <path d="M-87 59 Q-94 64 -96 70 L-93 71 Q-91 66 -85 62Z"/>
+          <path d="M-73 59 Q-66 64 -64 70 L-67 71 Q-69 66 -75 62Z"/>
+        </g>
+      </svg>
     </section>
 
-    <!-- Dream -->
-    <section id="dream">
-        <div class="section-header">
-            <div class="section-label">המורשת</div>
-            <h2 class="section-title">החלום שלא הספיק להגשים</h2>
-        </div>
+    <!-- ══════════════════════════════════════════════
+         STORY
+    ══════════════════════════════════════════════ -->
+    <section class="section story-bg" id="story" aria-labelledby="story-title">
+      <div class="section-inner">
+        <p class="section-label">סיפורו</p>
+        <h2 class="section-title" id="story-title">יוחנן אליהו פרדג׳ ז״ל</h2>
+        <div class="warm-divider"></div>
 
-        <div class="dream-box">
-            <h3>מרכז טיפולי ללוחמים</h3>
-            <p>
-                החלום האחרון של יוחנן היה להקים מקום — מקום שייתן כלים להתמודדות
-                עם הפצעים הבלתי נראים. מקום ללוחמים שלא מדברים ולא משתפים.
-                מקום שלא היה שם בשבילו.
+        <div class="story-grid">
+          <div class="story-portrait">
+            <div class="portrait-ring">
+              <img src="assets/img/portrait-face.webp"
+                   alt="יוחנן אליהו פרדג׳ ז״ל"
+                   style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />
+            </div>
+          </div>
+
+          <div class="story-body">
+            <p class="section-lead">
+              יוחנן אליהו פרדג׳ ז״ל היה איש של שקט ושל חיים. אדם שידע לאהוב, לחבק, ולהישאר עם האנשים שסביבו גם ברגעים הקשים ביותר. הוא שירת כלוחם בסיירת אגוז, והביא עמו מתוך השירות ניסיון אישי עמוק עם פוסט טראומה.
             </p>
+            <p class="section-lead" style="margin-top:16px;">
+              חלומו היה להקים מקום שבו אנשים לא יצטרכו להתמודד לבד. מקום שבו בני זוג יזכו לתמיכה לצד מי שהם אוהבים. מקום של טבע, של עשייה, של קהילה.
+            </p>
+            <p class="section-lead" style="margin-top:16px;">
+              "המקום" הוא אותו חלום, והוא ממשיך לחיות.
+            </p>
+
+            <div class="story-quote" role="blockquote">
+              <p>"הוא לא רצה שמישהו יישאר לבד עם זה. זה כל מה שהוא רצה."</p>
+              <p class="story-name">מדברי מי שהכירו אותו</p>
+            </div>
+          </div>
         </div>
-
-        <p class="body-text" style="margin-top: 2rem;">
-            משפחתו מבקשת להגשים את החלום הזה — לקחת את מה שיוחנן רצה לעשות
-            למען אחרים ולהפוך אותו למציאות.
-        </p>
-
-        <p class="body-text" style="color: var(--text-muted); font-size: 0.95rem;">
-            המשפחה מבקשת לשתף את הסיפור הזה רחוק ממחלוקות פוליטיות.
-            הסיפור של יוחנן הוא סיפור אנושי — של לוחם שנשבר כי נתן יותר מדי
-            ולא ביקש מספיק.
-        </p>
+      </div>
     </section>
 
-    <!-- Media / Articles -->
-    <section id="media">
-        <div class="section-header">
-            <div class="section-label">בתקשורת</div>
-            <h2 class="section-title">כתבות ופרסומים</h2>
+    <!-- ══════════════════════════════════════════════
+         NEED — המחיר של השקט
+    ══════════════════════════════════════════════ -->
+    <section class="section need-bg" id="need" aria-labelledby="need-title">
+      <div class="section-inner">
+        <p class="section-label">הצורך</p>
+        <h2 class="section-title" id="need-title">המחיר של השקט</h2>
+        <p class="section-lead">
+          בין שדה הקרב לבית מחכה פער שקט. משפחות של משרתים ואנשי מילואים נושאות נטל שלא תמיד רואים, וברוב המקרים, לבד.
+        </p>
+
+        <div class="need-cards" role="list">
+          <article class="need-card" role="listitem">
+            <h3>בדידות מול בירוקרטיה</h3>
+            <p>משפחות רבות מוצאות את עצמן בלי קהילה שמבינה, ונאלצות להתמודד לבד מול מערכת קלינית נוקשה.</p>
+          </article>
+          <article class="need-card" role="listitem">
+            <h3>מתח המעברים</h3>
+            <p>המעבר החד בין הלחימה לבית ולהורות יוצר מתחים בתוך התא המשפחתי, בלי כלים ובלי מרחב לעבד אותם.</p>
+          </article>
+          <article class="need-card" role="listitem">
+            <h3>נטל על העורף</h3>
+            <p>היעדרויות ממושכות מטילות עומס פיזי ורגשי כבד על בני הזוג ועל הילדים שנשארים בבית.</p>
+          </article>
         </div>
-
-        <div class="articles-grid">
-            <div class="article-card" onclick="openArticle('https://www.ynet.co.il/news/article/b111l1cx2wg')">
-                <img class="thumb" src="https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=400,q=75/picserver6/crop_images/2026/04/08/H1eDZ11z4211g/H1eDZ11z4211g_1_85_556_313_0_x-large.jpg" alt="כתבת ynet">
-                <div class="card-body">
-                    <div class="source">ynet</div>
-                    <h4>הסוף העצוב של יוחנן, אחרי שנים של לחימה בצה"ל</h4>
-                    <p class="excerpt">"הוא אמר לי תקשיב, אני כבר חנוק"</p>
-                </div>
-            </div>
-
-            <div class="article-card" onclick="openArticle('https://www.inn.co.il/news/694672')">
-                <img class="thumb" src="https://2.a7.org/files/pictures/000/1134610.jpg" alt="כתבת ערוץ 7">
-                <div class="card-body">
-                    <div class="source">ערוץ 7</div>
-                    <h4>האב השכול משתף בכאב: "יוחנן נתן הכול לאחרים עד שנפשו נשברה"</h4>
-                    <p class="excerpt">ראיון עם משה פרדג', אביו של יוחנן</p>
-                </div>
-            </div>
-
-            <div class="article-card" onclick="openArticle('https://www.news1.co.il/Archive/0026-D-183558-00.html')">
-                <img class="thumb" src="https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=400,q=75/picserver6/crop_images/2026/04/08/SJwbZGNnZl/SJwbZGNnZl_0_447_702_592_0_x-large.jpg" alt="כתבת News1">
-                <div class="card-body">
-                    <div class="source">News1</div>
-                    <h4>יוחנן — לוחם שנשא את עמו על כתפיו עד אשר כשלו כוחותיו</h4>
-                    <p class="excerpt">סיפור חייו המלא של יוחנן</p>
-                </div>
-            </div>
-
-            <div class="article-card" onclick="window.open('https://www.facebook.com/amutat.egoz/posts/%D7%91%D7%A6%D7%A2%D7%A8-%D7%92%D7%93%D7%95%D7%9C-%D7%95%D7%91%D7%9B%D7%90%D7%91-%D7%90%D7%A0%D7%95-%D7%9E%D7%95%D7%93%D7%99%D7%A2%D7%99%D7%9D-%D7%A2%D7%9C-%D7%A4%D7%98%D7%99%D7%A8%D7%AA%D7%95-%D7%91%D7%98%D7%A8%D7%9D-%D7%A2%D7%AA-%D7%A9%D7%9C-%D7%91%D7%95%D7%92%D7%A8-%D7%94%D7%99%D7%97%D7%99%D7%93%D7%94-%D7%99%D7%95%D7%97%D7%A0%D7%9F-%D7%90%D7%9C%D7%99%D7%94%D7%95-%D7%A4%D7%A8%D7%93%D7%92-%D7%96%D7%9C/1259683823024904/', '_blank')">
-                <img class="thumb" src="https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=400,q=75/picserver6/crop_images/2026/04/08/rJ11vbbGEhZg/rJ11vbbGEhZg_0_110_663_704_0_x-large.jpg" alt="עמותת אגוז">
-                <div class="card-body">
-                    <div class="source">עמותת אגוז · פייסבוק</div>
-                    <h4>"בצער גדול ובכאב אנו מודיעים על פטירתו בטרם עת..."</h4>
-                    <p class="excerpt">הודעת עמותת בוגרי היחידה</p>
-                </div>
-            </div>
-
-            <div class="article-card" onclick="window.open('https://x.com/ImTirtzu/status/2040849086446809263', '_blank')">
-                <img class="thumb" src="https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=400,q=75/picserver6/crop_images/2026/04/08/H1eDZ11z4211g/H1eDZ11z4211g_1_85_556_313_0_x-large.jpg" alt="אם תרצו">
-                <div class="card-body">
-                    <div class="source">אם תרצו · X</div>
-                    <h4>"יוחנן אליהו פרדז' ז"ל — לוחם שנשא על כתפיו את עמו"</h4>
-                    <p class="excerpt">הלך לעולמו ביום שישי האחרון</p>
-                </div>
-            </div>
-
-            <div class="article-card" onclick="window.open('https://www.instagram.com/p/DWYdA4lDVgX/', '_blank')">
-                <img class="thumb" src="https://ynet-pic1.yit.co.il/cdn-cgi/image/f=auto,w=400,q=75/picserver6/crop_images/2026/04/08/rJ11vbbGEhZg/rJ11vbbGEhZg_0_110_663_704_0_x-large.jpg" alt="אינסטגרם אגוז">
-                <div class="card-body">
-                    <div class="source">עמותת אגוז · אינסטגרם</div>
-                    <h4>מפרגנים לבוגרי היחידה</h4>
-                    <p class="excerpt">פוסט הנצחה באינסטגרם</p>
-                </div>
-            </div>
-        </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="memorial">✡ ת.נ.צ.ב.ה ✡</div>
-        <p class="sub">תהא נשמתו צרורה בצרור החיים</p>
-        <p class="sub">יוחנן אליהו פרדג' ז"ל · קריית ארבע · סיירת אגוז · חטיבת כרמלי</p>
-        <p class="credits">נבנה באהבה לזכרו של חבר</p>
-    </footer>
+    <!-- ══════════════════════════════════════════════
+         VISION
+    ══════════════════════════════════════════════ -->
+    <section class="section vision-bg" id="vision" aria-labelledby="vision-title">
+      <div class="section-inner">
+        <p class="section-label">החזון</p>
+        <h2 class="section-title" id="vision-title">מה אנחנו בונים יחד</h2>
+        <p class="section-lead">
+          "המקום" נולד מתוך צורך אמיתי. בית שמחזיק יחד חוסן, טבע ועשייה, ושמזמין גם את בני הזוג, כי ריפוי הוא תמיד מעשה משותף.
+        </p>
 
-    <!-- Flag stripe bottom -->
-    <div class="flag-stripe-bottom"></div>
+        <div class="vision-cards" role="list">
+          <!-- Card 1 -->
+          <article class="card" role="listitem">
+            <div class="card-icon" aria-hidden="true">
+              <!-- Heart / resilience icon -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 22 C13 22 3 15.5 3 9 C3 6.2 5.2 4 8 4 C10 4 11.8 5.1 13 6.7 C14.2 5.1 16 4 18 4 C20.8 4 23 6.2 23 9 C23 15.5 13 22 13 22Z" fill="var(--slate)" opacity=".85"/>
+              </svg>
+            </div>
+            <h3 class="card-title">חוסן ושיקום</h3>
+            <p class="card-body">
+              תוכניות ליווי מותאמות אישית, סדנאות חוסן, וקבוצות תמיכה, לאנשים שחוו טראומה ולמשפחותיהם. בלי שיפוטיות, בלי לבד.
+            </p>
+          </article>
 
-    <!-- Article Viewer Modal -->
-    <div class="modal-overlay" id="articleModal">
-        <div class="modal-frame">
-            <button class="modal-close" onclick="closeArticle()">✕</button>
-            <iframe id="articleFrame" src=""></iframe>
+          <!-- Card 2 -->
+          <article class="card" role="listitem">
+            <div class="card-icon" aria-hidden="true">
+              <!-- Tree / nature icon -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 3 L19 11 L15.5 11 L19 18 L15 18 L15 23 L11 23 L11 18 L7 18 L10.5 11 L7 11 Z" fill="var(--slate)" opacity=".85"/>
+              </svg>
+            </div>
+            <h3 class="card-title">טבע ועשייה</h3>
+            <p class="card-body">
+              פעילויות בטבע, גינון טיפולי, יצירה, ומרחבי שקט. כי לפעמים הריפוי מגיע כשהידיים עסוקות והראש מנוח.
+            </p>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="card" role="listitem">
+            <div class="card-icon" aria-hidden="true">
+              <!-- People / community icon -->
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="13" cy="8" r="4" fill="var(--slate)" opacity=".85"/>
+                <circle cx="5" cy="10" r="3" fill="var(--slate)" opacity=".55"/>
+                <circle cx="21" cy="10" r="3" fill="var(--slate)" opacity=".55"/>
+                <path d="M5 22 Q5 16 13 16 Q21 16 21 22" fill="var(--slate)" opacity=".85"/>
+                <path d="M0 22 Q0 18 5 17" fill="var(--slate)" opacity=".45"/>
+                <path d="M26 22 Q26 18 21 17" fill="var(--slate)" opacity=".45"/>
+              </svg>
+            </div>
+            <h3 class="card-title">קהילה ובני זוג</h3>
+            <p class="card-body">
+              מרחב שמזמין גם את בני הזוג, כי הם לא אספקה צדדית, הם חלק מהסיפור. קהילה שמחזיקה הכול.
+            </p>
+          </article>
         </div>
+
+        <!-- Pull-quote -->
+        <div class="vision-pullquote" aria-label="ציטוט השראה">
+          <p class="pullquote-text">
+            "לחיות זה לא רק לנשום. <span class="mark">לחיות זה לרצות לנשום.</span>"
+          </p>
+        </div>
+
+        <!-- Envelope model -->
+        <div style="margin-top:24px;">
+          <h3 class="section-title" style="font-size:clamp(1.5rem,3.5vw,2.2rem);">מעטפת אחת, ארבעה מעגלים</h3>
+          <p class="section-lead">
+            לא עוד מסגרת בודדת, אלא מעטפת שלמה שעוטפת את המשפחה מבחוץ פנימה, מהקהילה ועד הליווי האישי.
+          </p>
+
+          <div class="envelope-grid">
+            <div class="envelope-rings" aria-hidden="true">
+              <svg width="300" height="300" viewBox="0 0 300 300" role="img" aria-label="ארבעה מעגלים: קהילה, מרחב בטוח, מעטפת מקצועית, ליווי אישי">
+                <circle cx="150" cy="150" r="145" fill="#DCD1BC"/>
+                <circle cx="150" cy="150" r="110" fill="#D8C29B"/>
+                <circle cx="150" cy="150" r="74" fill="#D0B387"/>
+                <circle cx="150" cy="150" r="40" fill="#B9926A"/>
+                <text x="150" y="156" text-anchor="middle" fill="#FFFFFF" font-family="Heebo, sans-serif" font-weight="700" font-size="15">ליבה</text>
+              </svg>
+            </div>
+
+            <div class="envelope-legend">
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#B9926A;"></span>
+                <div>
+                  <h4>הליבה: ליווי אישי</h4>
+                  <p>מענה פרטני, זוגי ומשפחתי לחיזוק הקשר ולהתמודדות יומיומית.</p>
+                </div>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#D0B387;"></span>
+                <div>
+                  <h4>מעטפת מקצועית</h4>
+                  <p>קשת טיפולית רחבה, מטיפול שיחתי קליני ועד טיפול בטבע ובמלאכה.</p>
+                </div>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#D8C29B;"></span>
+                <div>
+                  <h4>מרחב בטוח</h4>
+                  <p>בית מזמין ובלתי פורמלי (Hub) — מקום של ביטחון, שקט ושייכות.</p>
+                </div>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot" style="background:#DCD1BC;"></span>
+                <div>
+                  <h4>קהילה תומכת</h4>
+                  <p>רשת של משפחות שחולקות את אותם אתגרים, וכוח מניע הדדי.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Family journey -->
+        <div style="margin-top:72px;">
+          <h3 class="section-title" style="font-size:clamp(1.5rem,3.5vw,2.2rem);">המסע של המשפחה</h3>
+          <p class="section-lead">
+            הדרך מתחילה רכה וטבעית, וממשיכה עד שהמשפחה עצמה הופכת לעוגן עבור משפחות אחרות.
+          </p>
+
+          <div class="journey" role="list">
+            <div class="journey-step" role="listitem">
+              <h4>כניסה טבעית</h4>
+              <p>הגעה בלי טפסים ובלי בירוקרטיה. קודם כל קפה, שיחה ושייכות.</p>
+            </div>
+            <div class="journey-step" role="listitem">
+              <h4>הערכה אישית</h4>
+              <p>הקשבה והתאמה של מסלול אישי, מבלי תוויות.</p>
+            </div>
+            <div class="journey-step" role="listitem">
+              <h4>טיפול ויצירה</h4>
+              <p>ליווי פרטני וקבוצתי לצד סדנאות נגרות וחקלאות והדרכת הורים.</p>
+            </div>
+            <div class="journey-step" role="listitem">
+              <h4>חזרה לקהילה</h4>
+              <p>המשפחה הופכת לנקודת תמיכה עבור מי שרק מתחיל את הדרך.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         SPACE — המרחב / פארק אלון
+    ══════════════════════════════════════════════ -->
+    <section class="section space-bg" id="space" aria-labelledby="space-title">
+      <div class="section-inner">
+        <p class="section-label">המרחב</p>
+        <h2 class="section-title" id="space-title">מקום שנע מן השקט אל הקהילה</h2>
+        <p class="section-lead">
+          המרחב עצמו הוא חלק מהטיפול. הוא בנוי כמסע: מפינות שקט בטבע, דרך עבודת כפיים, ועד לב חברתי פתוח.
+        </p>
+
+        <div class="space-arrow" aria-hidden="true"></div>
+        <div class="space-axis" role="list">
+          <div class="zone" role="listitem">
+            <p class="zone-tag">התבוננות</p>
+            <h3>שקט וטבע</h3>
+            <p>פינות ישיבה מבודדות בנוף, מרחבי שיחה פרטניים, והרחקה משאון היומיום.</p>
+          </div>
+          <div class="zone" role="listitem">
+            <p class="zone-tag">קרקוע</p>
+            <h3>יצירה ועשייה</h3>
+            <p>סדנאות נגרות, עבודה בברזל וחקלאות אקולוגית. עבודת כפיים כדרך לעיבוד רגשי ולתחושת מסוגלות.</p>
+          </div>
+          <div class="zone" role="listitem">
+            <p class="zone-tag">חיבור</p>
+            <h3>קהילה ולב חברתי</h3>
+            <p>אולם פתוח, מטבח חברתי ומפגשי שיח. הלב שמתחיל בכוס קפה ומחבר בין כולם.</p>
+          </div>
+        </div>
+
+        <div class="space-gallery" role="list">
+          <figure class="space-fig space-fig-wide" role="listitem">
+            <img src="assets/img/render-pergola-1200.webp" loading="lazy" alt="הדמיית שער הכניסה המקושת של המקום בשעת שקיעה" />
+            <figcaption>שער הכניסה</figcaption>
+          </figure>
+          <figure class="space-fig" role="listitem">
+            <img src="assets/img/space-carpentry-real-1200.webp" loading="lazy" alt="הדמיית חדר המלאכה והנגרות" />
+            <figcaption>חדר המלאכה</figcaption>
+          </figure>
+          <figure class="space-fig" role="listitem">
+            <img src="assets/img/space-greenhouse-1200.webp" loading="lazy" alt="הדמיית החווה והחממה" />
+            <figcaption>החממה והאדמה</figcaption>
+          </figure>
+          <figure class="space-fig" role="listitem">
+            <img src="assets/img/space-kitchen-1200.webp" loading="lazy" alt="הדמיית המטבח החברתי וחדר האוכל" />
+            <figcaption>המטבח החברתי</figcaption>
+          </figure>
+          <figure class="space-fig" role="listitem">
+            <img src="assets/img/render-plaza-1200.webp" loading="lazy" alt="הדמיית הרחבה המרכזית והבמה" />
+            <figcaption>הרחבה והמעגל</figcaption>
+          </figure>
+          <figure class="space-fig" role="listitem">
+            <img src="assets/img/render-therapy-1200.webp" loading="lazy" alt="הדמיית חדרי הטיפולים בין עצי הזית" />
+            <figcaption>חדרי הטיפולים</figcaption>
+          </figure>
+        </div>
+
+        <div class="space-tours">
+          <a href="experience.html" class="btn btn-ghost-dark" data-track="ExperienceClick">לסיור חי בגלילה</a>
+          <a href="tour.html" class="btn btn-ghost-dark" data-track="TourClick">לסיור 360 בין החדרים</a>
+        </div>
+
+        <p class="space-loc">
+          המרכז מתוכנן לקום ב<strong>פארק אלון, קריית ארבע</strong>. חיבור הרמוני בין נגישות עירונית לטבע פתוח.
+        </p>
+      </div>
+    </section>
+
+    <style>
+      .space-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 48px;
+      }
+      .space-fig {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 28px rgba(101,84,76,.16);
+        margin: 0;
+      }
+      .space-fig-wide { grid-column: span 3; }
+      .space-fig img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transition: transform .4s;
+      }
+      .space-fig-wide img { height: 340px; }
+      .space-fig:hover img { transform: scale(1.04); }
+      .space-fig figcaption {
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        padding: 26px 16px 12px;
+        background: linear-gradient(to top, rgba(49,49,57,.75), transparent);
+        color: var(--cream);
+        font-size: .9rem;
+        font-weight: 700;
+        text-align: right;
+      }
+      .space-tours {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 28px;
+      }
+      @media (max-width: 860px) {
+        .space-gallery { grid-template-columns: 1fr 1fr; }
+        .space-fig-wide { grid-column: span 2; }
+        .space-fig img { height: 170px; }
+        .space-fig-wide img { height: 220px; }
+      }
+    </style>
+
+<!-- ══════════════════════════════════════════════
+     מי היה יוחנן
+══════════════════════════════════════════════ -->
+<style>
+  .bio-who .bio-who-lead-group { margin-top: 8px; }
+  .bio-who .bio-who-lead-group .section-lead + .section-lead { margin-top: 16px; }
+  .bio-who .bio-who-traits {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    list-style: none;
+  }
+  .bio-who .bio-who-traits li {
+    background: var(--white);
+    border-radius: 14px;
+    border-top: 4px solid var(--caramel);
+    box-shadow: 0 2px 24px rgba(101,84,76,.08);
+    padding: 20px 22px;
+    font-size: .925rem;
+    font-weight: 300;
+    color: var(--clay);
+    line-height: 1.7;
+  }
+  @media (max-width: 860px) {
+    .bio-who .bio-who-traits { grid-template-columns: 1fr; }
+  }
+</style>
+
+<section class="section story-bg bio-who" id="who" aria-labelledby="who-title">
+  <div class="section-inner">
+    <p class="section-label">מי היה יוחנן</p>
+    <h2 class="section-title" id="who-title">האדם מאחורי הלוחם</h2>
+    <div class="warm-divider"></div>
+
+    <div class="bio-who-lead-group">
+      <p class="section-lead">
+        יוחנן אליהו פרדג׳ ז״ל, בן 38, היה תושב קריית ארבע. נשוי לנעמה, אבא לאורי, גלעד ונדב. בכור לשבעה אחים, חמישה מהם לוחמים בצה״ל.
+      </p>
+      <p class="section-lead">
+        יוחנן אהב לעזור, ויותר מכל אהב אנשים. את לוחמיו, את חבריו, את הפוסט טראומטיים שטרם הוכרו, את אלה שלא ביקשו. הוא נשא אותם על כתפיו עד שכוחותיו שלו כשלו.
+      </p>
+      <p class="section-lead">
+        יוחנן לא רק לחם, הוא דאג. דאג ללוחמים אחרים, למפקדים, לפוסט טראומטיים שטרם הוכרו. נסע ממקום למקום לגייס כסף לטיפול בחברים שנשברו, ושמר ציוד חירום בביתו, מוכן תמיד לקריאה.
+      </p>
     </div>
 
-    <script>
-        // Scroll reveal animations
-        const sections = document.querySelectorAll('section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
+    <div class="story-quote" role="blockquote">
+      <p>"נתן הכול לכולם · קודם כל אחרים, ורק אחר כך אני."</p>
+      <p class="story-name">מדברי המשפחה</p>
+    </div>
 
-        sections.forEach(s => observer.observe(s));
+    <ul class="bio-who-traits" role="list">
+      <li role="listitem">דאג באופן אישי ללוחמים ולמפקדים, לא רק בקרב, גם אחריו.</li>
+      <li role="listitem">עסק בעזרה לפוסט טראומטיים שטרם הוכרו רשמית.</li>
+      <li role="listitem">נסע ממקום למקום לגייס כסף עבור טיפול בלוחמים נפגעי נפש.</li>
+      <li role="listitem">שמר ציוד חירום בביתו, מוכן תמיד לכל קריאה, לעיתים בתוך חברון.</li>
+      <li role="listitem">הסתיר את הכאב. "הכול בסדר", "קשה אבל אני מסתדר".</li>
+    </ul>
 
-        // Active nav link
-        const navLinks = document.querySelectorAll('nav a');
-        const navObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    const id = entry.target.id;
-                    const link = document.querySelector(`nav a[href="#${id}"]`);
-                    if (link) link.classList.add('active');
-                }
-            });
-        }, { threshold: 0.3 });
+    <p class="section-lead" style="margin-top:32px;">
+      חברים מספרים שלא היו מאמינים שדווקא הוא, שתמיד היה החזק, תמיד נתן, תמיד עזר, הוא זה שייפול. כי הוא לא סיפר. כי הוא לא ביקש.
+    </p>
 
-        document.querySelectorAll('section[id], header[id]').forEach(s => navObserver.observe(s));
+    <div class="story-quote" role="blockquote">
+      <p>"יוחנן היה חלק ממשפחת אגוז · לוחם, חבר ואדם אהוב שהשאיר חותם על כל מי שפגש בו."</p>
+      <p class="story-name">הודעת עמותת בוגרי אגוז</p>
+    </div>
+  </div>
+</section>
 
-        // Article modal
-        function openArticle(url) {
-            const modal = document.getElementById('articleModal');
-            const frame = document.getElementById('articleFrame');
-            frame.src = url;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+<!-- ══════════════════════════════════════════════
+     המשפחה שאהב
+══════════════════════════════════════════════ -->
+<style>
+  .bio-family .family-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 48px;
+  }
+  .bio-family .family-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 32px 22px 28px;
+    text-align: center;
+    box-shadow: 0 2px 24px rgba(101,84,76,.08);
+    border-top: 4px solid var(--gold);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .bio-family .family-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 40px rgba(101,84,76,.15);
+  }
+  .bio-family .family-monogram {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--honey), var(--gold));
+    color: var(--slate);
+    font-size: 1.4rem;
+    font-weight: 900;
+  }
+  .bio-family .family-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--slate);
+    margin-bottom: 4px;
+  }
+  .bio-family .family-role {
+    font-size: .85rem;
+    font-weight: 300;
+    color: var(--clay);
+    letter-spacing: .04em;
+  }
+  .bio-family .family-bridge {
+    margin-top: 48px;
+    text-align: center;
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    font-weight: 500;
+    color: var(--clay);
+    line-height: 1.8;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  @media (max-width: 860px) {
+    .bio-family .family-cards { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .bio-family .family-cards { grid-template-columns: 1fr; }
+  }
+</style>
+
+<section class="section story-bg bio-family" id="family" aria-labelledby="family-title">
+  <div class="section-inner">
+    <p class="section-label">המשפחה שלו</p>
+    <h2 class="section-title" id="family-title">המשפחה שאהב</h2>
+    <div class="warm-divider"></div>
+
+    <p class="section-lead" style="margin-top:32px;">
+      את אלה הוא אהב יותר מכל. נעמה ושלושת הבנים היו הבית, העוגן, הסיבה לכל מה שנתן.
+    </p>
+
+    <div class="family-cards">
+      <div class="family-card">
+        <div class="family-monogram" aria-hidden="true">נ</div>
+        <div class="family-name">נעמה</div>
+        <div class="family-role">אשתו</div>
+      </div>
+      <div class="family-card">
+        <div class="family-monogram" aria-hidden="true">א</div>
+        <div class="family-name">אורי</div>
+        <div class="family-role">בנו הבכור</div>
+      </div>
+      <div class="family-card">
+        <div class="family-monogram" aria-hidden="true">ג</div>
+        <div class="family-name">גלעד</div>
+        <div class="family-role">בנו</div>
+      </div>
+      <div class="family-card">
+        <div class="family-monogram" aria-hidden="true">נ</div>
+        <div class="family-name">נדב</div>
+        <div class="family-role">בנו</div>
+      </div>
+    </div>
+
+    <p class="family-bridge">
+      אבל המשפחה שלו לא נגמרה כאן. היא כללה גם את לוחמיו, את חבריו, ואת האנשים שטיפל בהם.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     חיים של שירות
+══════════════════════════════════════════════ -->
+<section class="section story-bg bio-service" id="service" aria-labelledby="service-title">
+  <style>
+    .bio-service .bio-facts {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(20px, 5vw, 56px);
+      margin-top: 48px;
+      padding: 32px clamp(16px, 4vw, 40px);
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 2px 24px rgba(101,84,76,.08);
+    }
+    .bio-service .bio-fact { text-align: center; }
+    .bio-service .bio-fact-num {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 900;
+      color: var(--caramel);
+      line-height: 1;
+    }
+    .bio-service .bio-fact-lbl {
+      margin-top: 8px;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      color: var(--clay);
+    }
+    .bio-service .bio-fact-sep {
+      width: 1px;
+      align-self: stretch;
+      min-height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--sand), transparent);
+    }
+    .bio-service .bio-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+    }
+    .bio-service .bio-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--clay);
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: var(--cream);
+      border: 1.5px solid var(--sand);
+    }
+    .bio-service .bio-badge.is-gold {
+      color: var(--slate);
+      font-weight: 700;
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(216,194,155,.35), rgba(208,179,135,.15));
+    }
+    .bio-service .bio-campaigns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 44px;
+    }
+    .bio-service .bio-campaign {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 24px 22px;
+      text-align: center;
+      box-shadow: 0 2px 24px rgba(101,84,76,.08);
+      border-top: 4px solid var(--caramel);
+    }
+    .bio-service .bio-campaign-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .bio-service .bio-campaign-year {
+      margin-top: 6px;
+      font-size: .85rem;
+      font-weight: 300;
+      letter-spacing: .06em;
+      color: var(--clay);
+    }
+    @media (max-width: 560px) {
+      .bio-service .bio-campaigns { grid-template-columns: 1fr; }
+      .bio-service .bio-fact-sep { display: none; }
+    }
+  </style>
+
+  <div class="section-inner">
+    <p class="section-label">שירות</p>
+    <h2 class="section-title" id="service-title">חיים של שירות</h2>
+    <div class="warm-divider"></div>
+
+    <p class="section-lead" style="margin-top:40px;">
+      יוחנן שירת את מרבית חייו הבוגרים במערך הלחימה של צה״ל. החל בסיירת אגוז, ולא הפסיק. כשפרצה מלחמת חרבות ברזל, פנה לחבר קצין בחטיבת כרמלי ונאבק להתגייס מחדש כסגן מפקד פלוגה. לחם בכל מלחמה שארצו ניהלה מאז שהתגייס. לא ביקש שום דבר בתמורה.
+    </p>
+
+    <div class="bio-facts" role="list" aria-label="עובדות חיים">
+      <div class="bio-fact" role="listitem">
+        <div class="bio-fact-num">38</div>
+        <div class="bio-fact-lbl">שנות חיים</div>
+      </div>
+      <div class="bio-fact-sep" aria-hidden="true"></div>
+      <div class="bio-fact" role="listitem">
+        <div class="bio-fact-num">~20</div>
+        <div class="bio-fact-lbl">שנות שירות</div>
+      </div>
+      <div class="bio-fact-sep" aria-hidden="true"></div>
+      <div class="bio-fact" role="listitem">
+        <div class="bio-fact-num">3</div>
+        <div class="bio-fact-lbl">מבצעים</div>
+      </div>
+      <div class="bio-fact-sep" aria-hidden="true"></div>
+      <div class="bio-fact" role="listitem">
+        <div class="bio-fact-num">3</div>
+        <div class="bio-fact-lbl">ילדים</div>
+      </div>
+    </div>
+
+    <div class="bio-badges" aria-label="תפקידים ושיוך">
+      <span class="bio-badge is-gold">סיירת אגוז</span>
+      <span class="bio-badge is-gold">חטיבת כרמלי</span>
+      <span class="bio-badge">יחידת התערבות ביו״ש</span>
+      <span class="bio-badge">צוות לוט״ר ישובי</span>
+      <span class="bio-badge">רבש״ץ קריית ארבע</span>
+      <span class="bio-badge">חפ״ק מג״ד</span>
+    </div>
+
+    <div class="bio-campaigns" aria-label="מבצעים">
+      <div class="bio-campaign">
+        <div class="bio-campaign-name">עופרת יצוקה</div>
+        <div class="bio-campaign-year">2008·2009</div>
+      </div>
+      <div class="bio-campaign">
+        <div class="bio-campaign-name">צוק איתן</div>
+        <div class="bio-campaign-year">2014</div>
+      </div>
+      <div class="bio-campaign">
+        <div class="bio-campaign-name">חרבות ברזל</div>
+        <div class="bio-campaign-year">2023·2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     מסלול חיים
+══════════════════════════════════════════════ -->
+<section class="section story-bg bio-timeline" id="timeline" aria-labelledby="timeline-title">
+  <style>
+    .bio-timeline .bt-track {
+      position: relative;
+      max-width: 760px;
+      margin: 56px auto 0;
+      padding-inline-start: 0;
+    }
+    .bio-timeline .bt-track::before {
+      content: '';
+      position: absolute;
+      inset-block: 6px 6px;
+      inset-inline-start: auto;
+      inset-inline-end: 9px;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        transparent,
+        var(--gold) 8%,
+        var(--caramel) 50%,
+        var(--gold) 92%,
+        transparent);
+      opacity: .7;
+    }
+    .bio-timeline .bt-item {
+      position: relative;
+      padding-inline-end: 44px;
+      padding-block: 0 32px;
+    }
+    .bio-timeline .bt-item:last-child { padding-block-end: 0; }
+    .bio-timeline .bt-item::before {
+      content: '';
+      position: absolute;
+      inset-inline-end: 2px;
+      top: 6px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%, var(--sun-core), var(--gold) 55%, var(--caramel));
+      border: 3px solid var(--cream);
+      box-shadow: 0 0 0 1px rgba(185,146,106,.35), 0 2px 10px rgba(185,146,106,.4);
+      z-index: 1;
+    }
+    .bio-timeline .bt-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 22px 26px;
+      box-shadow: 0 2px 24px rgba(101,84,76,.08);
+      border-inline-start: 4px solid var(--gold);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .bio-timeline .bt-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 36px rgba(101,84,76,.15);
+    }
+    .bio-timeline .bt-year {
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--caramel);
+      margin-bottom: 8px;
+    }
+    .bio-timeline .bt-text {
+      font-size: .95rem;
+      font-weight: 300;
+      color: var(--clay);
+      line-height: 1.75;
+    }
+    @media (max-width: 560px) {
+      .bio-timeline .bt-track { margin-top: 40px; }
+      .bio-timeline .bt-item { padding-inline-end: 34px; }
+      .bio-timeline .bt-card { padding: 18px 20px; }
+    }
+  </style>
+
+  <div class="section-inner">
+    <p class="section-label">ציר זמן</p>
+    <h2 class="section-title" id="timeline-title">מסלול חיים</h2>
+    <div class="warm-divider"></div>
+
+    <div class="bt-track">
+      <div class="bt-item">
+        <div class="bt-card">
+          <div class="bt-year">2002</div>
+          <p class="bt-text">אביו משה נפצע אנוש בקרב סמטת הגבורה, הפיגוע בציר המתפללים בחברון. בקרב נהרגו 12 ישראלים, בהם אל"מ דרור וינברג.</p>
+        </div>
+      </div>
+
+      <div class="bt-item">
+        <div class="bt-card">
+          <div class="bt-year">~2006</div>
+          <p class="bt-text">מתגייס לסיירת אגוז. תחילת מסלול לחימה שיימשך כל חייו הבוגרים.</p>
+        </div>
+      </div>
+
+      <div class="bt-item">
+        <div class="bt-card">
+          <div class="bt-year">2008·2009</div>
+          <p class="bt-text">משתתף במבצע עופרת יצוקה בעזה.</p>
+        </div>
+      </div>
+
+      <div class="bt-item">
+        <div class="bt-card">
+          <div class="bt-year">2014</div>
+          <p class="bt-text">מבצע צוק איתן. חווה אירוע טראומטי בצוות. משוחרר מהמילואים.</p>
+        </div>
+      </div>
+
+      <div class="bt-item">
+        <div class="bt-card">
+          <div class="bt-year">לאחר השחרור</div>
+          <p class="bt-text">נפצע בפיגוע אבנים. עובד תקופה במשרד הביטחון. מחליט לשמש כרבש"ץ בקריית ארבע, תפקיד שמילא תחת לחץ עצום: פיגועים, חדירות, אירועי אבטחה. במקביל מתנדב בצוות לוט"ר ישובי.</p>
+        </div>
+      </div>
+
+      <div class="bt-item">
+        <div class="bt-card">
+          <div class="bt-year">7 באוקטובר 2023</div>
+          <p class="bt-text">מתעקש לחזור ללחימה. מתגייס מחדש לחטיבת כרמלי כסגן מפקד פלוגה.</p>
+        </div>
+      </div>
+
+      <div class="bt-item">
+        <div class="bt-card">
+          <div class="bt-year">2023·2026</div>
+          <p class="bt-text">חודשים ארוכים של לחימה רצופה: עזה, הצפון, לבנון. במקביל, עוזר ללוחמים נפגעי נפש, מגייס כסף לטיפולים.</p>
+        </div>
+      </div>
+
+      <div class="bt-item">
+        <div class="bt-card">
+          <div class="bt-year">אפריל 2026</div>
+          <p class="bt-text">יוחנן אליהו פרדג' הלך לעולמו. בן 38. השאיר אחריו אישה, שלושה ילדים, ומשפחה שלמה של לוחמים וחברים.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════
+     GALLERY · רגעים
+══════════════════════════════════════════════ -->
+<section class="section memory-bg bio-gallery-sec" id="gallery" aria-labelledby="gallery-title">
+  <div class="section-inner">
+    <div class="section-label">אלבום</div>
+    <h2 class="section-title" id="gallery-title">רגעים</h2>
+    <p class="section-lead">
+      רגעים קטנים שנשארים. חיוך, מבט, יד על כתף.
+      כאן נאסוף תמונות מחייו של יוחנן, כדי שהזיכרון יישאר חי וקרוב.
+    </p>
+
+    <div class="bio-gallery">
+      <figure class="bio-figure bio-figure-wide">
+        <img class="bio-photo" src="assets/img/gallery/g1.webp" loading="lazy" alt="יוחנן והמשפחה מחייכים יחד בחגיגת יום הולדת" />
+        <figcaption class="bio-caption">רגע של חיוך</figcaption>
+      </figure>
+      <figure class="bio-figure">
+        <img class="bio-photo" src="assets/img/gallery/g2.webp" loading="lazy" alt="יוחנן, נעמה והבנים ביער" />
+        <figcaption class="bio-caption">עם המשפחה</figcaption>
+      </figure>
+      <figure class="bio-figure">
+        <img class="bio-photo" src="assets/img/gallery/g3.webp" loading="lazy" alt="המשפחה במשתלה בין פרחים ועציצים" />
+        <figcaption class="bio-caption">בין הפרחים</figcaption>
+      </figure>
+      <figure class="bio-figure">
+        <img class="bio-photo" src="assets/img/gallery/g4.webp" loading="lazy" alt="יוחנן בפיקניק בטבע עם האנשים שאהב" />
+        <figcaption class="bio-caption">יחד בטבע</figcaption>
+      </figure>
+      <figure class="bio-figure">
+        <img class="bio-photo" src="assets/img/gallery/g5.webp" loading="lazy" alt="יוחנן ובנו מרימים כוסות בים" />
+        <figcaption class="bio-caption">רגע של נחת</figcaption>
+      </figure>
+      <figure class="bio-figure bio-figure-tall">
+        <img class="bio-photo" src="assets/img/gallery/g6.webp" loading="lazy" alt="דיוקן של יוחנן מחייך" />
+        <figcaption class="bio-caption">דיוקן</figcaption>
+      </figure>
+      <figure class="bio-figure">
+        <img class="bio-photo" src="assets/img/gallery/g7.webp" loading="lazy" alt="יוחנן והאחים צוחקים יחד בשמחה משפחתית" />
+        <figcaption class="bio-caption">בין האחים והחברים</figcaption>
+      </figure>
+      <figure class="bio-figure">
+        <img class="bio-photo" src="assets/img/gallery/g8.webp" loading="lazy" alt="יוחנן בצעירותו, מבט שקט" style="object-position:70% center;" />
+        <figcaption class="bio-caption">ימים שקטים</figcaption>
+      </figure>
+    </div>
+
+    <p class="form-note" style="text-align:center; margin-top:28px;">
+      יש לכם תמונה של יוחנן שתרצו להוסיף? נשמח לקבל אותה במייל:
+      <a href="mailto:hmakomeforyou@gmail.com?subject=תמונה של יוחנן" style="font-weight:700; color:var(--caramel);">hmakomeforyou@gmail.com</a>
+    </p>
+  </div>
+
+  <style>
+    .bio-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 200px;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .bio-figure {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 24px rgba(101,84,76,.1);
+      border: 1px solid rgba(208,179,135,.3);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .bio-figure:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 40px rgba(101,84,76,.18);
+    }
+    .bio-figure .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+    }
+    .bio-figure .bio-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .bio-figure-wide { grid-column: span 2; }
+    .bio-figure-tall { grid-row: span 2; }
+    .bio-caption {
+      position: absolute;
+      inset-block-end: 0;
+      inset-inline: 0;
+      padding: 22px 16px 12px;
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--white);
+      background: linear-gradient(0deg, rgba(49,49,57,.6), transparent);
+      letter-spacing: .04em;
+    }
+    @media (max-width: 860px) {
+      .bio-gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; }
+      .bio-figure-wide { grid-column: span 2; }
+      .bio-figure-tall { grid-row: span 1; }
+    }
+    @media (max-width: 560px) {
+      .bio-gallery { grid-template-columns: 1fr; grid-auto-rows: 200px; }
+      .bio-figure-wide { grid-column: span 1; }
+    }
+  </style>
+</section>
+
+    <!-- ══════════════════════════════════════════════
+         PARTNER — שותפות מקצועית
+    ══════════════════════════════════════════════ -->
+    <section class="partner-strip" aria-labelledby="partner-title">
+      <div class="partner-inner">
+        <p class="section-label">שותפות מקצועית</p>
+        <h3 id="partner-title">לא רק לב גדול, גם תשתית מקצועית חסרת פשרות</h3>
+        <p>
+          המרכז נשען על שותפות מקצועית לפיקוח קליני, הכשרת הצוות וליווי מתודולוגי, כדי שכל מעטפת רגשית תיעשה באחריות, בבטיחות ובאיכות.
+        </p>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         MEMORY CORNER
+    ══════════════════════════════════════════════ -->
+    <section class="section memory-bg" id="memory" aria-labelledby="memory-title">
+      <div class="section-inner">
+        <p class="section-label">פינת זיכרון</p>
+        <h2 class="section-title" id="memory-title">שתף זיכרון על יוחנן</h2>
+        <div class="warm-divider"></div>
+
+        <div class="memory-grid">
+          <div class="memory-text">
+            <p class="section-lead">
+              יוחנן השאיר רושם על כל מי שנגע בחייו. אם הכרת אותו, מהמסלול הצבאי, מהמשפחה, מהשכונה, כל זיכרון קטן הוא חלק מהמורשת שהמרכז נושא.
+            </p>
+            <p class="section-lead" style="margin-top:16px;">
+              כתבו לנו, ונשמור את הדברים כחלק מארכיון הזיכרון שייבנה כאן, במרכז.
+            </p>
+          </div>
+
+          <div class="memory-form-mock" aria-label="שיתוף זיכרון">
+            <p class="form-label" style="font-size:1.05rem; font-weight:700; margin-bottom:10px;">שתפו זיכרון במייל</p>
+            <p class="form-note" style="margin-bottom:18px;">
+              כתבו לנו כמה מילים, מי אתם, מה הקשר ליוחנן, ומה תרצו שיישמר. כל זיכרון מתקבל בהערכה וביד עדינה.
+            </p>
+            <a href="mailto:hmakomeforyou@gmail.com?subject=זיכרון על יוחנן" class="btn btn-primary" style="width:100%;">
+              לכתוב לנו זיכרון
+            </a>
+            <p class="form-note" style="margin-top:14px;">
+              פינת הזיכרון הדיגיטלית באתר תעלה בקרוב.
+              בינתיים אפשר לקרוא עוד על יוחנן
+              <a href="memorial.html" style="font-weight:700; color:var(--caramel);">בדף שמוקדש לזכרו</a>.
+            </p>
+            <p class="form-note" style="margin-top:8px;">
+              הדברים נשמרים בצורה מכובדת ולא מתפרסמים בלי אישורכם.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         JOIN — closing sky band
+    ══════════════════════════════════════════════ -->
+    <section class="join-section" id="join" aria-labelledby="join-title">
+      <div class="join-sky" aria-hidden="true"></div>
+
+      <!-- Sun glow -->
+      <div class="join-sun" aria-hidden="true">
+        <div class="join-sun-glow"></div>
+      </div>
+
+      <div class="join-content">
+        <p class="section-label">להצטרף</p>
+        <h2 class="section-title" id="join-title">הצטרף לחזון</h2>
+        <p class="join-sub">
+          "המקום" עוד בהקמה. אנחנו מחפשים שותפים, אנשים, עסקים וקרנות, שרואים בחזון הזה גם את שלהם. כל תרומה, בין אם בזמן, בידע או בהשקעה כספית, מקדמת אותנו צעד נוסף.
+        </p>
+
+        <div class="pillars" role="list">
+          <div class="pillar" role="listitem">
+            <h4>שותפות תקציבית</h4>
+            <p>מינוף משאבים וקולות קוראים מעולם הטיפול והשיקום, למימון ישיר של המעטפת.</p>
+          </div>
+          <div class="pillar" role="listitem">
+            <h4>פילנתרופיה</h4>
+            <p>קרנות וקהילות שמאמינות במורשת של יוחנן ובמשפחות שנושאות בנטל השקט.</p>
+          </div>
+          <div class="pillar" role="listitem">
+            <h4>גיוס המונים</h4>
+            <p>הזדמנות לכל אחד לקחת חלק ישיר בהקמת המקום ולהנציח את זכרו של יוחנן.</p>
+          </div>
+        </div>
+
+        <div class="join-ctas">
+          <a href="#" data-donate class="btn btn-primary">לתרומה למען המקום</a>
+          <a href="mailto:hmakomeforyou@gmail.com?subject=רוצה להצטרף לחזון המקום" class="btn btn-ghost-light">כתבו לנו</a>
+        </div>
+
+        <div class="join-contact" aria-label="פרטי יצירת קשר">
+          <div class="contact-item">
+            <span class="contact-label">אימייל</span>
+            <a href="mailto:hmakomeforyou@gmail.com" class="contact-value">hmakomeforyou@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">תרומה בביט או PayBox</span>
+            <a href="#" data-donate class="contact-value" dir="ltr">050 6685023</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">עמותה</span>
+            <span class="contact-value">המקום · ע״ר בהקמה</span>
+          </div>
+        </div>
+
+        <div class="join-social" aria-label="רשתות חברתיות">
+          <a href="https://www.facebook.com/profile.php?id=1155694527632232" target="_blank" rel="noopener" class="social-link">פייסבוק</a>
+          <span class="social-sep">·</span>
+          <a href="https://www.youtube.com/channel/UC8sXOlQpRuv-cMCyo_md5JQ" target="_blank" rel="noopener" class="social-link">יוטיוב</a>
+          <span class="social-sep">·</span>
+          <span class="social-soon">אינסטגרם בקרוב</span>
+        </div>
+        <style>
+          .join-social { margin-top: 26px; text-align: center; font-size: .95rem; }
+          .join-social .social-link { color: var(--white); font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+          .join-social .social-sep { color: rgba(255,255,255,.6); margin: 0 10px; }
+          .join-social .social-soon { color: rgba(255,255,255,.65); font-weight: 300; }
+        </style>
+      </div>
+
+      <!-- Silhouettes -->
+      <svg class="join-silhouettes"
+           viewBox="0 0 1440 130"
+           preserveAspectRatio="xMidYMax meet"
+           xmlns="http://www.w3.org/2000/svg"
+           aria-hidden="true"
+           focusable="false">
+        <rect x="0" y="100" width="1440" height="30" fill="#313139"/>
+        <g fill="#313139" transform="translate(620,0)">
+          <!-- Simplified wider group for closing band -->
+          <ellipse cx="0" cy="28" rx="8" ry="8"/>
+          <path d="M0 36 Q-4 52 -7 68 L-3 68 Q-2 55 0 46 Q2 55 3 68 L7 68 Q4 52 0 36Z"/>
+          <path d="M-7 50 Q-14 55 -16 62 L-13 63 Q-11 57 -5 53Z"/>
+          <path d="M7 50 Q14 55 16 62 L13 63 Q11 57 5 53Z"/>
+
+          <ellipse cx="40" cy="34" rx="7" ry="7"/>
+          <path d="M40 41 Q36 55 34 68 L38 68 Q39 57 40 49 Q41 57 42 68 L46 68 Q44 55 40 41Z"/>
+          <path d="M34 53 Q27 58 25 64 L28 65 Q30 60 36 57Z"/>
+
+          <ellipse cx="-40" cy="32" rx="7.5" ry="7.5"/>
+          <path d="M-40 39.5 Q-44 54 -46 68 L-42 68 Q-41 57 -40 48 Q-39 57 -38 68 L-34 68 Q-36 54 -40 39.5Z"/>
+          <path d="M-34 53 Q-27 58 -25 64 L-28 65 Q-30 60 -36 57Z"/>
+
+          <!-- child small -->
+          <ellipse cx="68" cy="46" rx="5.5" ry="5.5"/>
+          <path d="M68 51.5 Q65 60 64 68 L67 68 Q68 61 68 55 Q69 61 69 68 L72 68 Q71 60 68 51.5Z"/>
+
+          <ellipse cx="-72" cy="40" rx="6" ry="6"/>
+          <path d="M-72 46 Q-75 57 -77 68 L-73 68 Q-72 59 -72 52 Q-72 59 -71 68 L-67 68 Q-69 57 -72 46Z"/>
+        </g>
+      </svg>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <p>
+      <strong>המקום</strong>
+      <span class="footer-sep">·</span>
+      מרכז חוסן ועשייה לזכר יוחנן אליהו פרדג׳ ז״ל
+      <span class="footer-sep">·</span>
+      ע״ר בהקמה
+    </p>
+    <p class="footer-credit">נבנה ע״י הלל</p>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════
+       JS — nav scroll + mobile
+  ══════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      var nav = document.getElementById('main-nav');
+      var burger = document.getElementById('burger');
+      var navMenu = document.getElementById('nav-menu');
+      var open = false;
+
+      // Scroll shadow
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 40) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
         }
+      }, { passive: true });
 
-        function closeArticle() {
-            const modal = document.getElementById('articleModal');
-            const frame = document.getElementById('articleFrame');
-            modal.classList.remove('active');
-            frame.src = '';
-            document.body.style.overflow = '';
-        }
+      // Mobile burger
+      burger.addEventListener('click', function () {
+        open = !open;
+        burger.setAttribute('aria-expanded', open);
+        nav.classList.toggle('nav-mobile-open', open);
+      });
 
-        // Close modal on overlay click
-        document.getElementById('articleModal').addEventListener('click', function(e) {
-            if (e.target === this) closeArticle();
+      // Close on link click
+      navMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          open = false;
+          burger.setAttribute('aria-expanded', false);
+          nav.classList.remove('nav-mobile-open');
         });
+      });
+    })();
+  </script>
 
-        // Close on Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeArticle();
-        });
-
-        // Parallax effect on scroll
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const heroBg = document.querySelector('.hero-bg');
-            if (heroBg) {
-                heroBg.style.transform = `scale(1.1) translateY(${scrolled * 0.3}px)`;
-            }
-        });
-    </script>
+  <script src="js/marketing-tools.js"></script>
+  <script src="js/donate-modal.js"></script>
+  <script>
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest ? e.target.closest('[data-track]') : null;
+      if (el && window.track) window.track(el.getAttribute('data-track'));
+    });
+  </script>
 
 </body>
 </html>
