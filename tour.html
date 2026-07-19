@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>סיור במקום · עמותת המקום</title>
 <meta name="description" content="סיור אינטראקטיבי בבית החוסן שקם בקריית ארבע לזכר יוחנן אליהו פרדג' ז&quot;ל. הסתובבו בתוך המקום וראו איך הוא ייראה.">
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="canonical" href="https://hmakomeforyou-dev.github.io/yochanan-memorial/tour.html">
+<meta name="theme-color" content="#1c1a17">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="סיור במקום · עמותת המקום">
+<meta property="og:description" content="סיור 360 אינטראקטיבי בבית החוסן שקם בפארק אלון, קריית ארבע, לזכר יוחנן אליהו פרדג' ז&quot;ל.">
+<meta property="og:url" content="https://hmakomeforyou-dev.github.io/yochanan-memorial/tour.html">
+<meta property="og:image" content="https://hmakomeforyou-dev.github.io/yochanan-memorial/assets/img/og-hamakom-1200x630.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
@@ -83,31 +93,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Heebo',s
 div.pnlm-tooltip span{font-family:'Heebo',sans-serif;font-size:14px;background:rgba(28,26,23,.9);
   border-radius:10px;padding:6px 12px}
 
-/* ---------- donate modal ---------- */
-#donateModal{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.65);display:none;
-  align-items:center;justify-content:center;padding:20px}
-#donateModal.open{display:flex}
-#donateModal .box{background:var(--cream);color:var(--slate);border-radius:22px;padding:34px 30px;
-  max-width:400px;width:100%;text-align:center;position:relative}
-#donateModal h3{font-size:24px;font-weight:800}
-#donateModal p{font-size:15px;color:var(--clay);margin-top:8px;line-height:1.6}
-#donateModal .num{direction:ltr;font-size:30px;font-weight:800;letter-spacing:2px;color:var(--slate);
-  background:#fff;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin:18px 0 10px}
-#copyBtn{border:0;background:var(--gold);color:var(--slate);font-family:inherit;font-weight:800;font-size:16px;
-  border-radius:999px;padding:12px 34px;cursor:pointer;margin-top:6px}
-#copyBtn.done{background:#7a9a6d;color:#fff}
-#closeModal{position:absolute;top:12px;left:14px;border:0;background:transparent;font-size:22px;cursor:pointer;color:var(--clay)}
-
-/* ---------- cookie banner ---------- */
-#cookies{position:fixed;bottom:0;left:0;right:0;z-index:90;background:rgba(28,26,23,.96);
-  border-top:1px solid rgba(208,179,135,.4);padding:14px 18px calc(14px + env(safe-area-inset-bottom));
-  display:none;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
-#cookies.show{display:flex}
-#cookies p{font-size:13px;color:var(--sand);max-width:560px;line-height:1.5}
-#cookies button{border:0;border-radius:999px;font-family:inherit;font-size:13.5px;padding:9px 20px;cursor:pointer;min-height:38px}
-#acceptAll{background:var(--gold);color:var(--slate);font-weight:800}
-#essentialOnly{background:transparent;color:var(--sand);border:1px solid rgba(208,179,135,.5)}
-
 @media (max-width:640px){
   #infoCard{top:auto;bottom:calc(72px + env(safe-area-inset-bottom));right:10px;max-width:calc(100vw - 88px)}
   .navArrow{width:46px;height:46px}
@@ -129,8 +114,8 @@ div.pnlm-tooltip span{font-family:'Heebo',sans-serif;font-size:14px;background:r
 </div>
 
 <div id="brand">
-  <span class="logo">עמותת המקום</span>
-  <button id="donateBtn">לתרומה למען המקום</button>
+  <a class="logo" href="index.html" style="text-decoration:none;color:inherit;">עמותת המקום</a>
+  <button data-donate id="donateBtn">לתרומה למען המקום</button>
 </div>
 
 <div id="infoCard"><h2></h2><p></p><span class="badge">הדמיה זמנית. פנורמת 360 מלאה בקרוב.</span></div>
@@ -140,22 +125,8 @@ div.pnlm-tooltip span{font-family:'Heebo',sans-serif;font-size:14px;background:r
 
 <nav id="stations" aria-label="תחנות הסיור"></nav>
 
-<div id="donateModal" role="dialog" aria-modal="true">
-  <div class="box">
-    <button id="closeModal" aria-label="סגירה">✕</button>
-    <h3>לתרומה למען המקום</h3>
-    <p>בביט או PayBox, כל תרומה מניחה לבנה בבית החוסן.</p>
-    <div class="num">050 6685023</div>
-    <button id="copyBtn">העתקת המספר</button>
-  </div>
-</div>
-
-<div id="cookies">
-  <p>האתר משתמש בעוגיות למדידת ביקורים (Meta Pixel) כדי שנדע שהסיפור מגיע לאנשים. אפשר להמשיך גם בלי.</p>
-  <button id="acceptAll">אישור הכול</button>
-  <button id="essentialOnly">חיוני בלבד</button>
-</div>
-
+<script src="js/marketing-tools.js"></script>
+<script src="js/donate-modal.js"></script>
 <script src="js/vendor/pannellum/pannellum.js"></script>
 <script>
 'use strict';
@@ -277,71 +248,7 @@ function boot() {
   updateUI();
 }
 
-/* ---------- donate ---------- */
-const modal = document.getElementById('donateModal');
-document.getElementById('donateBtn').addEventListener('click', () => {
-  modal.classList.add('open');
-  track('DonateClick', { from: 'tour' });
-});
-document.getElementById('closeModal').addEventListener('click', () => modal.classList.remove('open'));
-modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.classList.remove('open'); });
-document.getElementById('copyBtn').addEventListener('click', () => {
-  const num = '0506685023';
-  const done = () => {
-    const b = document.getElementById('copyBtn');
-    b.textContent = 'הועתק';
-    b.classList.add('done');
-    track('DonateNumberCopied', {});
-    setTimeout(() => { b.textContent = 'העתקת המספר'; b.classList.remove('done'); }, 2500);
-  };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(num).then(done).catch(() => legacyCopy(num, done));
-  } else legacyCopy(num, done);
-});
-function legacyCopy(text, cb) {
-  const ta = document.createElement('textarea');
-  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-  document.body.appendChild(ta); ta.select();
-  try { document.execCommand('copy'); cb(); } catch (e) {}
-  document.body.removeChild(ta);
-}
 
-/* ---------- consent + pixel ---------- */
-const PIXEL_ID = '2132323570952002';
-let pixelReady = false;
-const pending = [];
-function track(name, data) {
-  if (pixelReady && window.fbq) { window.fbq('trackCustom', name, data || {}); }
-  else pending.push([name, data]);
-}
-function initTracking() {
-  if (pixelReady) return;
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-  document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  window.fbq('init', PIXEL_ID);
-  window.fbq('track', 'PageView');
-  pixelReady = true;
-  pending.splice(0).forEach(([n, d]) => window.fbq('trackCustom', n, d || {}));
-}
-(function consent() {
-  const v = localStorage.getItem('cookie_consent_v2');
-  if (v === 'all') { initTracking(); return; }
-  if (v === 'essential') return;
-  document.getElementById('cookies').classList.add('show');
-  document.getElementById('acceptAll').addEventListener('click', () => {
-    localStorage.setItem('cookie_consent_v2', 'all');
-    document.getElementById('cookies').classList.remove('show');
-    initTracking();
-  });
-  document.getElementById('essentialOnly').addEventListener('click', () => {
-    localStorage.setItem('cookie_consent_v2', 'essential');
-    document.getElementById('cookies').classList.remove('show');
-  });
-})();
 </script>
 </body>
 </html>
