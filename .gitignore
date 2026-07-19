@@ -44,4 +44,15 @@ supabase/.temp/
 
 # local admin dashboard + supabase backend files (never publish to Pages)
 admin-leads.html
+admin-stories.html
 supabase/
+
+# internal production docs — must not be served on GitHub Pages
+storyboard.html
+סרט-זיכרון-תכנון.md
+שירים-מומלצים.md
+מצגת-ראש-המועצה*.pdf
+מצגת-ראש-המועצה.html
+
+# heavy raw film assets — used only by local remotion/storyboard, not by the website
+assets/videos/
