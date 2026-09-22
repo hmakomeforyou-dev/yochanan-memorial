@@ -7,7 +7,10 @@
 (function () {
   'use strict';
 
-  var PIXEL_ID = '2132323570952002';
+  /* פיקסל העמותה "פיקסל המקום". הוחלף 22.09.2026 מהפיקסל האישי של הלל (2132323570952002),
+     כדי שנתוני הגולשים של העמותה יישבו בחשבון של העמותה ולא בחשבון פרטי.
+     נוצר בפורטפוליו העסקי "עמותת המקום" (1712692130045924). */
+  var PIXEL_ID = '1643942194057340';
   var GA4_ID = '';      // e.g. 'G-XXXXXXXXXX' — filled after property creation
   var CLARITY_ID = '';  // e.g. 'abcdefghij' — filled after project creation
 
