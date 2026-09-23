@@ -56,3 +56,7 @@ storyboard.html
 
 # heavy raw film assets — used only by local remotion/storyboard, not by the website
 assets/videos/
+
+# Watermarked originals kept locally as a rollback. Never publish (public repo).
+assets/experience/seq-backup-watermarked/
+assets/tour/_backup-gemini-watermark/
